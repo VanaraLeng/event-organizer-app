@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { RequestInterceptor } from './request.interceptor';
 import { UserService } from './user.service';
 import { MenuComponent } from './components/menu/menu.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 function initializeAppFactory(): (userService: UserService) => void {
   return () => {
@@ -29,7 +30,8 @@ function initializeAppFactory(): (userService: UserService) => void {
       { path: 'auth', loadChildren: ()=> import('./auth/auth.module').then(module => module.AuthModule )},
       { path: 'event', loadChildren: ()=> import('./event/event.module').then(module => module.EventModule )},
       { path: '**', redirectTo: '' }
-    ])
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [ 
     {
