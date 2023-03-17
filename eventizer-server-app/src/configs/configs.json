@@ -1,0 +1,4 @@
+{
+  "SECRET_KEY": "eventizermwafinalproject",
+  "saltRounds": 10
+}
