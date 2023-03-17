@@ -3,7 +3,7 @@ const Events = require('../models/eventsModel');
 async function getAllEvents(req, res, next) {
   try {
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 }
@@ -11,7 +11,7 @@ async function getAllEvents(req, res, next) {
 async function getEventById(req, res, next) {
   try {
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 }
@@ -19,15 +19,22 @@ async function getEventById(req, res, next) {
 async function getEventAttendees(req, res, next) {
   try {
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 }
 
 async function addNewEvent(req, res, next) {
   try {
-
-  } catch(e) {
+    const newEvent = new Events({
+      ...req.body,
+      createdBy: req.user,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    });
+    const result = await newEvent.save();
+    res.json({ success: true, data: { result: result } });
+  } catch (e) {
     next(e);
   }
 }
@@ -35,7 +42,7 @@ async function addNewEvent(req, res, next) {
 async function updateEventById(req, res, next) {
   try {
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 }
@@ -43,7 +50,7 @@ async function updateEventById(req, res, next) {
 async function deleteEventById(req, res, next) {
   try {
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 }
@@ -51,7 +58,7 @@ async function deleteEventById(req, res, next) {
 async function registerEventById(req, res, next) {
   try {
 
-  } catch(e) {
+  } catch (e) {
     next(e);
   }
 }

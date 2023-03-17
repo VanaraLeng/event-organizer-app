@@ -5,15 +5,15 @@ const morgan = require('morgan');
 
 const usersRouter = require('./src/routes/usersRouter');
 const eventsRouter = require('./src/routes/eventsRouter');
-const { BadRequestError, NotFoundError } = require('./src/utils/error');
+const { BadRequestError, NotFoundError, UnauthorizedError } = require('./src/utils/error');
 
 // initialisations
 const app = express();
-(async function() {
+(async function () {
   try {
     await mongoose.connect('mongodb://127.0.0.1:27017/eventizer')
     console.log('connected to db');
-  } catch(e) {
+  } catch (e) {
     console.log('fail to connect to db');
     console.log(e);
   }
@@ -38,8 +38,9 @@ app.all('*', (req, res, next) => {
 app.use((err, req, res, next) => {
   let status = 500;
   if (err instanceof BadRequestError) status = 400;
+  if (err instanceof UnauthorizedError) status = 401;
   if (err instanceof NotFoundError) status = 404;
-  res.json({success: false, message: err.message});
+  res.json({ success: false, message: err.message });
 });
 
 // bootup
