@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { RequestInterceptor } from './request.interceptor';
 import { UserService } from './user.service';
+import { MenuComponent } from './components/menu/menu.component';
 
 function initializeAppFactory(): (userService: UserService) => void {
   return () => {
@@ -16,7 +17,8 @@ function initializeAppFactory(): (userService: UserService) => void {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
