@@ -5,7 +5,7 @@ import { SignupComponent } from './signup/signup.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
 
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,7 @@ import { MaterialModule } from '../material.module';
   imports: [
     CommonModule,
     MaterialModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent }
