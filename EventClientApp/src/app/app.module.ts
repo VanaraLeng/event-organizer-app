@@ -9,13 +9,9 @@ import { RequestInterceptor } from './request.interceptor';
 import { UserService } from './user.service';
 import { MenuComponent } from './components/menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
+import { MaterialModule } from './material.module';
 
 function initializeAppFactory(): (userService: UserService) => void {
   return () => {
@@ -40,13 +36,8 @@ function initializeAppFactory(): (userService: UserService) => void {
       { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
     LayoutModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule
+    MaterialModule,
   ],
   providers: [ 
     {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material.module';
 
 
 
@@ -13,10 +14,11 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-     RouterModule.forChild([
+    MaterialModule,
+    RouterModule.forChild([
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent }
-     ])
+    ])
   ]
 })
 export class AuthModule { }
