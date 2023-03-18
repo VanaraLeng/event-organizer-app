@@ -26,11 +26,12 @@ async function getEventAttendees(req, res, next) {
 
 async function addNewEvent(req, res, next) {
   try {
+    const timestamp = Date.now();
     const newEvent = new Events({
       ...req.body,
       createdBy: req.user,
-      createdAt: Date.now(),
-      updatedAt: Date.now()
+      createdAt: timestamp,
+      updatedAt: timestamp
     });
     const result = await newEvent.save();
     res.json({ success: true, data: { result: result } });
