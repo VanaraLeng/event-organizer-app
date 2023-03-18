@@ -2,15 +2,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY, saltRounds } = require('../configs/configs.json');
 const Users = require('../models/usersModel');
-const { NotFoundError } = require('../utils/error');
+const { BadRequestError } = require('../utils/error');
 
 async function login(req, res, next) {
   try {
     const { email, password } = { ...req.body };
     const user = await Users.findOne({ email: email }).lean();
-    if (!user) throw new NotFoundError('incorrect email');
+    if (!user) throw new BadRequestError('incorrect email');
     const result = await bcrypt.compare(password, user.password);
-    if (!result) throw new NotFoundError('incorrect password');
+    if (!result) throw new BadRequestError('incorrect password');
     jwt.sign({ ...user, password: null }, SECRET_KEY, (err, token) => {
       res.json({ success: true, data: { token: token } });
     });
