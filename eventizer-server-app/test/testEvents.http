@@ -1,2 +1,19 @@
-### get all events
+### get all events no filter
 GET http://localhost:3000/api/events
+
+### get all events with auth
+GET http://localhost:3000/api/events
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0Y2U2ZWFmNTg1YWFhMGY0OGM3MzYiLCJmaXJzdE5hbWUiOiJqb2huIiwibGFzdE5hbWUiOiJ3aWNrIiwiZW1haWwiOiJqb2huLndpY2tAZ21haWwuY29tIiwicGFzc3dvcmQiOm51bGwsImJpbyI6InRoaXMgaXMgam9obiIsImxvY2F0aW9uIjpbLTkxLjk2NDMyMzU2ODM1NDA1LDQxLjAwOTkwNzM1MTU5NTg3XSwiX192IjowLCJpYXQiOjE2NzkxNjgyNDV9.JXhXKpigCP15xV2S-bWbKHRoU01TfQLAASXKTYh8ZfQ
+
+### get all events startBefore 3/22/2023
+GET http://localhost:3000/api/events?startBefore=1679512100
+
+### get all events based on popularity >= 1 attendee
+GET http://localhost:3000/api/events?popularity=3
+
+### get all events that are newest and popularity >= 1
+GET http://localhost:3000/api/events?startBefore=1679512100&popularity=2
+
+### get all events all filter
+GET http://localhost:3000/api/events?registered=true&startBefore=1679512100&popularity=1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0ZDRkNDFkYzUzYzhiYTUzZTczNDgiLCJmaXJzdE5hbWUiOiJrZWFudSIsImxhc3ROYW1lIjoicmVldmVzIiwiZW1haWwiOiJrZWFudS5yZWV2ZXNAZ21haWwuY29tIiwicGFzc3dvcmQiOm51bGwsImJpbyI6InRoaXMgaXMga2VhbnUiLCJsb2NhdGlvbiI6Wy05MS45NjQzMjM1NjgzNTQwNSw0MS4wMDk5MDczNTE1OTU4N10sIl9fdiI6MCwiaWF0IjoxNjc5MTY2OTA1fQ.-Z6noUOloW8Hwa2iCu1vGys4xVhL1RBG-Q5AVvaywUI

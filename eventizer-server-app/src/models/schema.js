@@ -10,7 +10,7 @@ const usersSchema = mongoose.Schema({
   email: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
   bio: { type: String },
-  location: [],
+  location: [Number],
   photo: picturesSchema
 });
 
@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   bio: { type: String },
-  location: [],
+  location: [Number],
   photo: picturesSchema
 })
 
@@ -29,7 +29,7 @@ const eventsSchema = mongoose.Schema({
   createdBy: { type: userSchema, required: true },
   startAt: { type: Number, required: true },
   endAt: { type: Number, required: true },
-  location: [],
+  location: {type: [Number], index: '2d'},
   seatLimit: { type: Number, required: true },
   attendees: [userSchema],
   photos: [picturesSchema],

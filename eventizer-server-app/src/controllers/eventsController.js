@@ -3,7 +3,33 @@ const Events = require('../models/eventsModel');
 
 async function getAllEvents(req, res, next) {
   try {
+    // construct query
+    const { registered, startBefore, popularity, lat, long } = req.query;
+    const query = {};
+    if (req.user) {
+      if (req.user.location) query['location'] = {$near: req.user.location};
+      if (registered === "true") query['attendees._id'] = req.user._id;
+      else if (registered === "false") query['createdBy._id'] = req.user._id;
+    }
+    if (startBefore) query['startAt'] = { $lte: startBefore }
+    if (popularity) query['$expr'] = { $gte: [{ $size: "$attendees" }, +popularity] }
+    if (lat && long) query['location'] = { $near: [+long, +lat] };
 
+    // find events
+    let result = await Events.find(query).sort({ createdAt: -1 }).lean();
+
+    // flag events that req.user registered
+    if (req.user && (!registered || registered === "true")) {
+      result = result.map(event => {
+        event.attendees.forEach(attendee => {
+          if (attendee._id == req.user._id) event.registered = true;
+        });
+        return event;
+      });
+    }
+
+    // respond result
+    res.json({ success: true, data: { events: result } });
   } catch (e) {
     next(e);
   }
@@ -15,14 +41,6 @@ async function getEventById(req, res, next) {
     const result = await Events.findOne({ _id: event_id });
     if (!result) throw new BadRequestError('no event found');
     res.json({ success: true, data: { events: [result] } });
-  } catch (e) {
-    next(e);
-  }
-}
-
-async function getEventAttendees(req, res, next) {
-  try {
-
   } catch (e) {
     next(e);
   }
@@ -72,18 +90,18 @@ async function registerEventById(req, res, next) {
     const { event_id } = req.params;
     const { action } = req.query;
     let result = await Events.findOne(
-      {_id: event_id, "createdBy._id": req.user._id}
+      { _id: event_id, "createdBy._id": req.user._id }
     );
     if (result) throw new BadRequestError('creator not allow to register');
     if (action === "register") {
       result = await Events.updateOne(
-        {_id: event_id},
-        {$push: {attendees: req.user}}
+        { _id: event_id },
+        { $push: { attendees: req.user } }
       );
     } else {
       result = await Events.updateOne(
-        {_id: event_id},
-        {$pull: {attendees: {_id: req.user._id}}}
+        { _id: event_id },
+        { $pull: { attendees: { _id: req.user._id } } }
       );
     }
     res.json({ success: true, data: { result: result } });
@@ -95,7 +113,6 @@ async function registerEventById(req, res, next) {
 module.exports = {
   getAllEvents,
   getEventById,
-  getEventAttendees,
   addNewEvent,
   updateEventById,
   deleteEventById,
