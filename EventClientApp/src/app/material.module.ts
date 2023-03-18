@@ -10,6 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -26,6 +29,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
         MatInputModule,
         MatSnackBarModule,
         MatGridListModule,
+        MatStepperModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     providers: [
         { provide: MatCardModule }
@@ -43,6 +49,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
         MatInputModule,
         MatSnackBarModule,
         MatGridListModule,
+        MatStepperModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ]
 
 })

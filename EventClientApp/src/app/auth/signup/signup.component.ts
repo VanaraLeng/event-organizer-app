@@ -34,14 +34,13 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    const param = this.form.value
     const params = {
-      "firstName": param.firstname,
-      "lastName": param.lastname,
-      "email": param.email,
-      "password": param.password,
-      "bio": param.bio,
-      "location": [param.latitude, param.longitude]
+      "firstName": this.form.value.firstname,
+      "lastName": this.form.value.lastname,
+      "email": this.form.value.email,
+      "password": this.form.value.password,
+      "bio": this.form.value.bio,
+      "location": [this.form.value.latitude, this.form.value.longitude]
     }
 
     this.userService.signup(params).subscribe({
