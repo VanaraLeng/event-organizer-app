@@ -69,7 +69,24 @@ async function deleteEventById(req, res, next) {
 
 async function registerEventById(req, res, next) {
   try {
-
+    const { event_id } = req.params;
+    const { action } = req.query;
+    let result = await Events.findOne(
+      {_id: event_id, "createdBy._id": req.user._id}
+    );
+    if (result) throw new BadRequestError('creator not allow to register');
+    if (action === "register") {
+      result = await Events.updateOne(
+        {_id: event_id},
+        {$push: {attendees: req.user}}
+      );
+    } else {
+      result = await Events.updateOne(
+        {_id: event_id},
+        {$pull: {attendees: {_id: req.user._id}}}
+      );
+    }
+    res.json({ success: true, data: { result: result } });
   } catch (e) {
     next(e);
   }
