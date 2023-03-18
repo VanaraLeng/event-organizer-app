@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const usersRouter = require('./src/routes/usersRouter');
 const eventsRouter = require('./src/routes/eventsRouter');
@@ -25,6 +26,7 @@ app.disable('x-powered-by');
 // middlewares
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 // routers
 app.use('/api/users', usersRouter);
