@@ -1,5 +1,5 @@
 ### get event by id
-GET http://localhost:3000/api/events/
+GET http://localhost:3000/api/events/6414e82c190ed4cf157188e1
 
 ### get an event attendees
-GET http://localhost:3000/api/events//attendees
+GET http://localhost:3000/api/events/6414e82c190ed4cf157188e1/attendees

@@ -13,11 +13,16 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0Y2U2Z
 }
 
 ### update an event
-PUT http://localhost:3000/api/events/
+PUT http://localhost:3000/api/events/6414e8da681a8d7a4e7ec925
+Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0Y2U2ZWFmNTg1YWFhMGY0OGM3MzYiLCJmaXJzdE5hbWUiOiJqb2huIiwibGFzdE5hbWUiOiJ3aWNrIiwiZW1haWwiOiJqb2huLndpY2tAZ21haWwuY29tIiwicGFzc3dvcmQiOm51bGwsImJpbyI6InRoaXMgaXMgam9obiIsImxvY2F0aW9uIjpbLTkxLjk2NDMyMzU2ODM1NDA1LDQxLjAwOTkwNzM1MTU5NTg3XSwiX192IjowLCJpYXQiOjE2NzkwODgzOTh9.b6nMnqy7xaDhIDlYxRGGhRzbAqa9-n2GyNub2WMx0eM
 
+{
+  "title": "Event DD"
+}
+
 ### delete an event
-DELETE http://localhost:3000/api/events/
+DELETE http://localhost:3000/api/events/6414e8df681a8d7a4e7ec928
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0Y2U2ZWFmNTg1YWFhMGY0OGM3MzYiLCJmaXJzdE5hbWUiOiJqb2huIiwibGFzdE5hbWUiOiJ3aWNrIiwiZW1haWwiOiJqb2huLndpY2tAZ21haWwuY29tIiwicGFzc3dvcmQiOm51bGwsImJpbyI6InRoaXMgaXMgam9obiIsImxvY2F0aW9uIjpbLTkxLjk2NDMyMzU2ODM1NDA1LDQxLjAwOTkwNzM1MTU5NTg3XSwiX192IjowLCJpYXQiOjE2NzkwODgzOTh9.b6nMnqy7xaDhIDlYxRGGhRzbAqa9-n2GyNub2WMx0eM
 
 ### register an event

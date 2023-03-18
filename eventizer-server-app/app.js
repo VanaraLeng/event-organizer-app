@@ -40,7 +40,7 @@ app.use((err, req, res, next) => {
   if (err instanceof BadRequestError) status = 400;
   if (err instanceof UnauthorizedError) status = 401;
   if (err instanceof NotFoundError) status = 404;
-  res.json({ success: false, message: err.message });
+  res.status(status).json({ success: false, message: err.message });
 });
 
 // bootup

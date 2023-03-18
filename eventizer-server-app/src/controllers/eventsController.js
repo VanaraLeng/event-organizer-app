@@ -1,3 +1,4 @@
+const { BadRequestError } = require('../utils/error');
 const Events = require('../models/eventsModel');
 
 async function getAllEvents(req, res, next) {
@@ -10,7 +11,10 @@ async function getAllEvents(req, res, next) {
 
 async function getEventById(req, res, next) {
   try {
-
+    const { event_id } = req.params;
+    const result = await Events.findOne({ _id: event_id });
+    if (!result) throw new BadRequestError('no event found');
+    res.json({ success: true, data: { events: [result] } });
   } catch (e) {
     next(e);
   }
@@ -42,7 +46,12 @@ async function addNewEvent(req, res, next) {
 
 async function updateEventById(req, res, next) {
   try {
-
+    const { event_id } = req.params;
+    const result = await Events.updateOne(
+      { _id: event_id, "createdBy._id": req.user._id },
+      { $set: { ...req.body, updatedAt: Date.now() } }
+    );
+    res.json({ success: true, data: { result: result } });
   } catch (e) {
     next(e);
   }
@@ -50,7 +59,9 @@ async function updateEventById(req, res, next) {
 
 async function deleteEventById(req, res, next) {
   try {
-
+    const { event_id } = req.params;
+    const result = await Events.deleteOne({ _id: event_id, "createdBy._id": req.user._id });
+    res.json({ success: true, data: { result: result } });
   } catch (e) {
     next(e);
   }
