@@ -15,12 +15,13 @@ export class RequestInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-    // TODO: - Update session logic here
-    const token = ''; 
-    const authReq = request.clone(
-      { headers: request.headers.set('Authorization ', `Bearer ${token}`) });
-
-      return next.handle(authReq);
+    if (this.userService.isLoggedIn()) {
+      const token = this.userService.state$.value.token;
+      request = request.clone({
+        setHeaders: { 'Authorization': `Bearer ${token}` }
+      });
+    }
+    
+      return next.handle(request);
   }
 }

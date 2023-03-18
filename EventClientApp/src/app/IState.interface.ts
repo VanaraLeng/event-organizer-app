@@ -3,8 +3,7 @@ export default interface IState {
     firstName: string,
     lastName: string,
     email: string,
-    password: string,
     bio: string,
     location: [],
-    token: string
+    token: string,
 }

@@ -1,13 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/user.service';
+import jwt_decode from 'jwt-decode';
+import IState from 'src/app/IState.interface';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
   template: `
-
   <h1 class="title"> Log in to Eventizer </h1>
-  <form class="form">
+  <form class="form" [formGroup]="form" (ngSubmit)="login()">
     
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Enter your email</mat-label>
@@ -25,12 +29,14 @@ import { MatFormFieldControl } from '@angular/material/form-field';
     </mat-form-field>
     <br>
 
-    <button mat-raised-button color="accent" class="full-width"  (click)="login">Login</button>
+    <button mat-raised-button color="accent" class="full-width" [disabled]="form.invalid">Login</button>
 
     <br>
     <br>
     Don't have account yet? 
     <button mat-button [routerLink]="['','auth','signup']">Sign Up Now</button>
+
+    
 
   </form>
   `,
@@ -57,10 +63,14 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 export class LoginComponent {
 
   form = inject(FormBuilder).group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required] ]
+    email: ['john.wick@gmail.com', [Validators.required, Validators.email]],
+    password: ['1234', [Validators.required] ]
   })
 
+  
+  userService = inject(UserService);
+  notification = inject(MatSnackBar);
+  router = inject(Router)
 
   email = new FormControl('', [Validators.required, Validators.email]);
   hide = true;
@@ -69,11 +79,43 @@ export class LoginComponent {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
     }
-
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
   login() {
-    
+
+    const param = this.form.value
+    this.userService.login(param).subscribe({
+      next: (res) => {
+
+        if (res.success === true) {
+          
+          const { _id, firstName, lastName, email, location, bio, token } = jwt_decode(res.data.token) as IState
+          // Store user state
+          const state = {
+            _id,
+            firstName,
+            lastName,
+            email,
+            location,
+            bio,
+            token : res.data.token
+          }
+          
+          // update state$ value
+          this.userService.state$.next(state)
+          // Store in local storage 
+          localStorage.setItem('APPSTATE', JSON.stringify(state))
+          this.router.navigate([''])
+          console.log("login success");
+
+        } else {
+          this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000} )      
+        }
+      },
+      error: (e) => {
+        this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000} )    
+      }
+    })
   }
 }
