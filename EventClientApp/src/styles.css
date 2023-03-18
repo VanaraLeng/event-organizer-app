@@ -11,13 +11,3 @@ body {
 }
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-.main-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-}
-
-.form-full-width {
-    width: 100%;
-}
