@@ -7,7 +7,7 @@
 .form {
     margin: 0 auto;
     min-width: 150px;
-    max-width: 90%;
+    max-width: 95%;
     width: 100%;
     padding: 12px;
 }
@@ -40,4 +40,20 @@
 
 ::ng-deep .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
     padding-top: 3px;
+}
+
+.center {
+    text-align: center;
+}
+
+.thz-header {
+    font-size: xxx-large;
+    padding: 40% 30% 10% 30%;
+    color: #ff4081;
+    font-style: italic;
+}
+
+.thz-content {
+    padding: 10px;
+    font-style: oblique;
 }

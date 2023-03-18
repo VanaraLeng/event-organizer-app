@@ -1,81 +1,91 @@
-<h1 class="title"> Sign Up to Eventizer </h1>
-<form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
-    <mat-grid-list cols="2" rowHeight="4:1">
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>First Name</mat-label>
-                <input matInput placeholder="Enter First Name" formControlName="firstname" required>
-                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                <mat-hint>The name that your parents call you</mat-hint>
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Enter Last Name" formControlName="lastname" required>
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Enter your email</mat-label>
-                <input matInput placeholder="pat@example.com" [formControl]="email" required>
-                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile></mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Password</mat-label>
-                <input type="password" matInput placeholder="Type password" formControlName="password" required>
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Confirm Password</mat-label>
-                <input type="password" matInput placeholder="Type again" formControlName="confirmPassword" required>
-            </mat-form-field>
-            <div *ngIf="">Invalid Password</div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="2">
-            <mat-divider class="divider"></mat-divider>
-            <span class="divider-content">Your Location</span>
-            <mat-divider class="divider"></mat-divider>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Latitude</mat-label>
-                <input type="text" matInput placeholder="Type again" formControlName="location.lat">
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Longitude</mat-label>
-                <input type="text" matInput placeholder="Type again" formControlName="location.lang">
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="2">
-            <mat-divider class="divider"></mat-divider>
-            <span class="divider-content">About You</span>
-            <mat-divider class="divider"></mat-divider>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="2">
-            <br>
-            <mat-form-field appearance="outline" class="full-width custom-padding">
-                <mat-label>Bio</mat-label>
-                <textarea matInput matInput placeholder="Enter Your Bio" formControlName="bio"></textarea>
-            </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <input #fileInput hidden="true" type="file" formControlName="profile" />
-            <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
-                (click)="fileInput.click()">Upload Photo</button>
-        </mat-grid-tile>
-        <!--  -->
-        <mat-grid-tile colspan="2">
-            <button mat-raised-button color="primary" class=" half-width" type="submit">Submit</button>
-            <!-- <button mat-raised-button color="primary" class=" half-width" type="submit"
-                [disabled]="!form.valid">Submit</button> -->
-        </mat-grid-tile>
-    </mat-grid-list>
+<div *ngIf="signup">
+    <h1 class="title"> Sign Up to Eventizer </h1>
+    <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+        <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="Enter First Name" formControlName="firstname" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <mat-hint>The name that your parents call you</mat-hint>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Enter Last Name" formControlName="lastname" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName="email" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Type password" formControlName="password" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" matInput placeholder="Type again" formControlName="confirmPassword" required>
+                    <mat-error *ngIf="passwordTyped.invalid">{{getPwdError()}}</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+                <mat-divider class="divider"></mat-divider>
+                <span class="divider-content">Your Location</span>
+                <mat-divider class="divider"></mat-divider>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Latitude</mat-label>
+                    <input type="text" matInput placeholder="Type again" formControlName="latitude">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Longitude</mat-label>
+                    <input type="text" matInput placeholder="Type again" formControlName="longitude">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+                <mat-divider class="divider"></mat-divider>
+                <span class="divider-content">About You</span>
+                <mat-divider class="divider"></mat-divider>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="2">
+                <br>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Bio</mat-label>
+                    <textarea matInput matInput placeholder="Enter Your Bio" formControlName="bio"></textarea>
+                    <mat-hint>Briefly describe about yourself</mat-hint>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <input #fileInput hidden="true" type="file" formControlName="profile" />
+                <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
+                    (click)="fileInput.click()">Upload Photo</button>
+            </mat-grid-tile>
+            <!--  -->
+            <mat-grid-tile colspan="2">
+                <button mat-raised-button color="primary" class=" half-width" type="submit">Submit</button>
+                <!-- <button mat-raised-button color="primary" class=" half-width" type="submit"
+                    [disabled]="!form.valid">Submit</button> -->
+            </mat-grid-tile>
+        </mat-grid-list>
 
-</form>
+    </form>
+</div>
+<div *ngIf="!signup" class="center">
+    <div class="thz-header"> Thank You !</div>
+    <div class="thz-content"> Thank you for signing up in our application.</div>
+    <div class="thz-content"> Let's enjoy the experience!</div>
+    <a mat-raised-button color="accent" class="half-width" type="submit" [routerLink]="['','auth','login']">Login
+        Here</a>
+</div>

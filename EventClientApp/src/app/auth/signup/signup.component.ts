@@ -16,37 +16,52 @@ export class SignupComponent {
     email: ['', [Validators.required, Validators.email]],
     password: [''],
     confirmPassword: [''],
-    location: [{
-      lat: '',
-      long: ''
-    }],
+    latitude: [''],
+    longitude: [''],
     bio: [''],
     profile: [''],
   })
   email = new FormControl('', [Validators.required, Validators.email]);
+  passwordTyped = new FormControl('', [Validators.required]);
+  signup = true;
 
   userService = inject(UserService);
   notification = inject(MatSnackBar);
   router = inject(Router)
 
+  onNgInit() {
+    this.signup = true;
+  }
+
   onSubmit() {
     const param = this.form.value
-    this.notification.open("Thank you for Signing Up!", "", {
-      horizontalPosition: 'end',
-      verticalPosition: 'top', duration: 3 * 1000
+    const params = {
+      "firstName": param.firstname,
+      "lastName": param.lastname,
+      "email": param.email,
+      "password": param.password,
+      "bio": param.bio,
+      "location": [param.latitude, param.longitude]
+    }
+
+    this.userService.signup(params).subscribe({
+      next: (res) => {
+        console.log("res ==>", res);
+
+        if (res.success === true) {
+          this.notification.open("Thank you for Signing Up!", "", {
+            horizontalPosition: 'end',
+            verticalPosition: 'top', duration: 3 * 1000
+          })
+          this.signup = false;
+        } else {
+          this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      },
+      error: (e) => {
+        this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+      }
     })
-    // this.userService.signup(param).subscribe({
-    //   next: (res) => {
-    //     if (res.success === true) {
-    //       console.log("sign up success");
-    //     } else {
-    //       this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
-    //     }
-    //   },
-    //   error: (e) => {
-    //     this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
-    //   }
-    // })
   }
 
   getErrorMessage() {
@@ -55,6 +70,14 @@ export class SignupComponent {
     }
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  getPwdError() {
+    if (this.form.value.password != this.form.value.confirmPassword) {
+      return 'Password Mismatch!';
+    }
+
+    return this.email.hasError('passwordTyped') ? 'Wrong Passowrd' : '';
   }
 
 }
