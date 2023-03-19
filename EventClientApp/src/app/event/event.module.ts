@@ -31,6 +31,7 @@ import { ViewEventComponent } from './view-event/view-event.component';
       { path: '', component: HomeComponent },
       { path: 'create', component: CreateEventComponent },
       { path: 'update', component: UpdateEventComponent },
+      { path: 'list', component: ListEventComponent },
       { path: '**', redirectTo: '' }
     ])
   ]

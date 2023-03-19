@@ -17,12 +17,12 @@ export class EventService {
     // Construct query
     const urlTree = this.router.createUrlTree(['/'], { queryParams: query })
     let queryString = this.urlSerializer.serialize(urlTree);
-    queryString = queryString.replace('/','');
-    return this.client.get<IResult< { events: IEvent[] }>>(environment.SERVER_BASE_URL + '/api/events' + queryString);
+    queryString = queryString.replace('/', '');
+    return this.client.get<IResult<{ events: IEvent[] }>>(environment.SERVER_BASE_URL + '/api/events' + queryString);
   }
 
   register(event_id: string, action: string) {
-    return this.client.post<IResult< { result: any }>>(environment.SERVER_BASE_URL + '/api/events/' + event_id + '/registration?action=' + action, {});
+    return this.client.post<IResult<{ result: any }>>(environment.SERVER_BASE_URL + '/api/events/' + event_id + '/registration?action=' + action, {});
   }
 
   create(event: any) {
