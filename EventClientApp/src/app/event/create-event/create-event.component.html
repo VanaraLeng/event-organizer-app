@@ -92,46 +92,49 @@
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Final Step!</ng-template>
-        <mat-grid-list cols="2" rowHeight="4:1">
+        <mat-grid-list cols="2" rowHeight="2:1">
             <mat-grid-tile colspan="2">
                 <div class="center">
                     <h2>Congratulations! You reached the final step to create an event.</h2>
                     <h6>Let's double check the information</h6>
                 </div>
             </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="2">
             <mat-grid-tile class="details" colspan="2">
                 <table class="table">
                     <tr>
                         <td>Event Title:</td>
-                        <td>Event Title</td>
+                        <td><span>{{firstFormGroup.value.title}}</span></td>
                     </tr>
                     <tr>
-                        <td>Event Title:</td>
-                        <td>Event Title</td>
+                        <td>Event Start Date :</td>
+                        <td>{{firstFormGroup.value.startDate}}</td>
                     </tr>
                     <tr>
-                        <td>Event Title:</td>
-                        <td>Event Title</td>
+                        <td>Event End Date:</td>
+                        <td>{{firstFormGroup.value.endDate}}</td>
                     </tr>
                     <tr>
-                        <td>Event Title:</td>
-                        <td>Event Title</td>
+                        <td class="fit">Event Description:</td>
+                        <td>{{firstFormGroup.value.description}}</td>
+                    </tr>
+                    <tr>
+                        <td>Event Location:</td>
+                        <td>{{secondFormGroup.value.latitude}},{{secondFormGroup.value.longitude}} </td>
+                    </tr>
+                    <tr>
+                        <td>Seat Limit:</td>
+                        <td>{{secondFormGroup.value.seatLimit}}</td>
+                    </tr>
+                    <tr>
+                        <td>Event Photos:</td>
+                        <td>{{thirdFormGroup.value.photo}}</td>
                     </tr>
                 </table>
-                <div>
-                    <label> Event Title</label>
-                    <span>{{firstFormGroup.value.title}}</span>
-                </div>
-                <br>
-                <div>
-                    <label> Event Start Date</label>
-                    <span>{{firstFormGroup.value.startDate}}</span>
-                </div>
-                <div>
-                    <label> Event End Date</label>
-                    <span>{{firstFormGroup.value.endDate}}</span>
-                </div>
             </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="2" rowHeight="4:1">
             <mat-grid-tile colspan="2">
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Start Over</button>
