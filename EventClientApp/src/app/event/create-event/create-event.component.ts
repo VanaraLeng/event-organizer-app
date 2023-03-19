@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-// import { Router } from '@angular/router';
-import { EventsService } from 'src/app/services/events.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-create-event',
@@ -37,7 +36,7 @@ export class CreateEventComponent {
     photo: ['']
   });
 
-  eventService = inject(EventsService);
+  eventService = inject(EventService);
   notification = inject(MatSnackBar);
 
   onSubmit() {

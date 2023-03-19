@@ -12,15 +12,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './material.module';
-import { EventsService } from './services/events.service';
 
-function initializeAppFactory(userService: UserService, eventService: EventsService): () => void {
+function initializeAppFactory(userService: UserService): () => void {
   return () => {
     // Your initialize app codes go here 
-    const state = localStorage.getItem('APP_STATE');
+    const state = localStorage.getItem('APPSTATE');
     if (state) {
       userService.state$.next(JSON.parse(state))
-      eventService.state$.next(JSON.parse(state))
     }
   }
 }
@@ -36,15 +34,14 @@ function initializeAppFactory(userService: UserService, eventService: EventsServ
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {
-        path: '', component: AppComponent, pathMatch: 'full', canActivate: [() => {
-          const isLoggedIn = inject(UserService).isLoggedIn();
-          if (!isLoggedIn) { inject(Router).navigate(['auth', 'login', '']) };
-          return isLoggedIn;
-        }]
-      },
-      { path: 'auth', loadChildren: () => import('./auth/auth.module').then(module => module.AuthModule) },
-      { path: 'event', loadChildren: () => import('./event/event.module').then(module => module.EventModule) },
+      { path: '', component: AppComponent, pathMatch: 'full', canActivate: [ ()=> { 
+        const isLoggedIn = inject(UserService).isLoggedIn();
+        if (!isLoggedIn) { inject(Router).navigate(['auth', 'login', '']) };
+        return  isLoggedIn;
+      }]  },
+      { path: '', pathMatch: 'full', redirectTo: '/event' },
+      { path: 'auth', loadChildren: ()=> import('./auth/auth.module').then(module => module.AuthModule )},
+      { path: 'event', loadChildren: ()=> import('./event/event.module').then(module => module.EventModule )},
       { path: '**', redirectTo: '/auth/signup' }
     ]),
     BrowserAnimationsModule,
@@ -55,7 +52,7 @@ function initializeAppFactory(userService: UserService, eventService: EventsServ
     {
       provide: APP_INITIALIZER,
       useFactory: initializeAppFactory,
-      deps: [UserService, EventsService],
+      deps: [UserService],
       multi: true
     },
     {

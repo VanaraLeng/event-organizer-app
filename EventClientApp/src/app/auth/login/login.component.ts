@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   form = inject(FormBuilder).group({
-    email: ['john.wick@gmail.com', [Validators.required, Validators.email]],
+    email: ['keanu.reeves@gmail.com', [Validators.required, Validators.email]],
     password: ['1234', [Validators.required] ]
   })
 

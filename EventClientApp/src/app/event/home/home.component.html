@@ -1,0 +1,22 @@
+  <!-- Toolbar -->
+  <mat-toolbar>
+    <mat-button-toggle-group name="sort" aria-label="Sort" (change)="onSortButtonGroupValChange($event.value)">
+      <mat-button-toggle value="recommend">Recommend</mat-button-toggle>
+      <mat-button-toggle value="popular">Popular</mat-button-toggle>
+    <mat-button-toggle value="nearby">Nearby</mat-button-toggle>
+  </mat-button-toggle-group>
+  
+  <span class="spacer"></span>
+  
+  <mat-form-field class="startBefore" appearance="outline" color="accent">
+    <mat-label>Start Before</mat-label>
+    <input matInput [matDatepicker]="picker" (dateInput)="onStartDateValueChange($event.value)" (dateChange)="onStartDateValueChange($event.value)">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker ngDefaultControl></mat-datepicker>
+</mat-form-field>
+
+</mat-toolbar>
+
+<div *ngFor="let item of items"> 
+  <event-card [event]= "item" (onRsvp)="onRsvp(item)" (onUnrsvp)="onUnrsvp(item)"/>
+</div> 
