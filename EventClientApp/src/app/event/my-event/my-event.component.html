@@ -1,9 +1,8 @@
   <!-- Toolbar -->
   <mat-toolbar>
-    <mat-button-toggle-group name="sort" aria-label="Sort" (change)="onSortButtonGroupValChange($event.value)">
-      <mat-button-toggle value="recommend">Recommend</mat-button-toggle>
-      <mat-button-toggle value="popular">Popular</mat-button-toggle>
-    <mat-button-toggle value="nearby">Nearby</mat-button-toggle>
+    <mat-button-toggle-group (change)="onGroupChange($event.value)">
+      <mat-button-toggle value="my-event">My Events</mat-button-toggle>
+      <mat-button-toggle value="reserved-event">Reserved Events</mat-button-toggle>
   </mat-button-toggle-group>
   
   <span class="spacer"></span>
@@ -28,9 +27,8 @@
 <div *ngFor="let item of items"> 
   <event-card 
   [event]= "item"
-  [editable]="false"
+  [editable]="isEditable"
   [registerable]="userService.isLoggedIn()"
   (action)="cardEventAction(item, $event)"
-
   />
 </div> 

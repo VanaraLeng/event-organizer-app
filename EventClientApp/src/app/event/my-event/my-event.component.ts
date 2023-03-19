@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import IEvent from 'src/app/IEvent.interface';
@@ -6,12 +6,11 @@ import { UserService } from 'src/app/user.service';
 import { EventService } from '../event.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css'],
-  changeDetection: ChangeDetectionStrategy.Default
+  selector: 'event-my-event',
+  templateUrl: 'my-event.component.html',
+  styleUrls: ['my-event.component.css'],
 })
-export class HomeComponent {
+export class MyEventComponent {
   items: IEvent[] = []
 
   sorted?: string
@@ -21,39 +20,37 @@ export class HomeComponent {
   notification = inject(MatSnackBar);
 
   startBefore?: number;
+  isEditable = false
 
   constructor(private router: Router) {
 
   }
 
-  ngAfterViewInit() {
-    this.getAllEvents({});
+  ngOnInit() {
+    this.isEditable = true
+    this.getAllEvents({ registered : false });
   }
 
-  onSortButtonGroupValChange(value: string) {
+
+
+  onGroupChange(value: string) {
     // Clear current list 
     this.items = []
 
-
-    const location = this.userService.state$.value.location;
-
     switch (value) {
-      case 'recommend':
-        this.getAllEvents({});
-        break;
-
-      case 'popular':
+      case 'my-event':
+        this.isEditable = true;
         this.getAllEvents({
-          popular: true
+          registered: false
         });
         break;
 
-      case 'nearby': {
+      case 'reserved-event':
+        this.isEditable = false;
         this.getAllEvents({
-          lat: location[0] ?? 0,
-          long: location[1] ?? 0,
+          registered: true
         });
-      }
+        break;
     }
   }
 
@@ -77,7 +74,7 @@ export class HomeComponent {
         }
       },
       error: (e) => {
-        this.notification.open(e.message, 'Dismiss')
+        this.notification.open(e.message, 'Dismiss', { duration: 3000 })
       }
     })
   }
@@ -91,6 +88,9 @@ export class HomeComponent {
       case 'unregister': 
         this.onUnrsvp(event)
         break;
+
+        case 'edit':
+          this.edit(event) 
     }
   }
 
@@ -125,4 +125,9 @@ export class HomeComponent {
     })
   }
 
+  edit(event: IEvent) {
+    this.eventService.editEvent = event
+    this.router.navigate(['','event','create']);
+  }
+  
 }

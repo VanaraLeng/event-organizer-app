@@ -18,8 +18,6 @@ export class UserService {
 
   isLoggedIn() {
     const token = this.state$.value.token;
-    console.log('token is');
-    console.log(token);
     return token != null && token.length > 0
   }
 

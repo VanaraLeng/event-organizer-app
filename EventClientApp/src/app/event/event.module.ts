@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './home/home.component';
@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateEventComponent } from './update-event/update-event.component';
 import { ListEventComponent } from './list-event/list-event.component';
 import { ViewEventComponent } from './view-event/view-event.component';
+import { MyEventComponent } from './my-event/my-event.component';
+import { UserService } from '../user.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ViewEventComponent } from './view-event/view-event.component';
     EventCardComponent,
     UpdateEventComponent,
     ListEventComponent,
-    ViewEventComponent
+    ViewEventComponent,
+    MyEventComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import { ViewEventComponent } from './view-event/view-event.component';
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild([
-      { path: '', component: HomeComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'me', component: MyEventComponent, canActivate: [() => { return inject(UserService).isLoggedIn() }] },
       { path: 'create', component: CreateEventComponent },
       { path: 'update', component: UpdateEventComponent },
       { path: 'list', component: ListEventComponent },

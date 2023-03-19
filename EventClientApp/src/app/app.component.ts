@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ import { map, shareReplay } from 'rxjs/operators';
         
         <mat-nav-list>
           <a mat-list-item [routerLink]="['','event']">Public Events</a>
-          <a mat-list-item [routerLink]="['','auth','login']" href="#">My Events</a>
+          <a mat-list-item [routerLink]="['','event', 'me']">My Events</a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -28,10 +30,11 @@ import { map, shareReplay } from 'rxjs/operators';
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
-          <span>Eventizer</span>
+          <mat-icon>event</mat-icon> 
+          <span> Eventizer</span>
           <span class="example-spacer"></span>
-          <button mat-raised-button  *ngIf="isLogin" (action)='logout()' color="accent"> Log Out </button>
-          <button mat-raised-button *ngIf="!isLogin" (action)='login()' color="accent"> Log In </button>
+          <button mat-raised-button  *ngIf="userService.isLoggedIn()" (click)='logout()' color="accent"> Log Out </button>
+          <button mat-raised-button *ngIf="!userService.isLoggedIn()" (click)='login()' color="accent"> Log In </button>
         </mat-toolbar>
         
         <!-- Add Content Here -->
@@ -67,6 +70,7 @@ import { map, shareReplay } from 'rxjs/operators';
   `]
 })
 export class AppComponent {
+  userService = inject(UserService);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -74,18 +78,19 @@ export class AppComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
-
-  isLogin() {
-    return false;
-  }
+  constructor(private router: Router, private breakpointObserver: BreakpointObserver) {}
 
   logout() {
     // handle logout flow
+    console.log('Logout')
+    this.userService.logout();
+    this.router.navigate(['','auth','login']);
   }
 
   login() {
     // handle login flow
+    console.log('Login')
+    this.router.navigate(['','auth','login']);
   }
 
 }

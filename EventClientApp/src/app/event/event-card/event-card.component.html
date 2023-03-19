@@ -1,7 +1,7 @@
 <mat-card class="my-card">
     <mat-card-header>
         <mat-card-title>{{event.title}}</mat-card-title>
-        <mat-card-subtitle>{{event.createdBy.firstName}} {{event.createdBy.lastName}} {{ event.createdAt * 1000 | date }}</mat-card-subtitle>
+        <mat-card-subtitle>{{event.createdBy.firstName}} {{event.createdBy.lastName}}  {{ event.createdAt * 1000 | date }}</mat-card-subtitle>
     </mat-card-header>
     <div class="spacer"></div>
     <mat-card-content>
@@ -33,7 +33,7 @@
         <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-        <div *ngIf="registerable">
+        <div *ngIf="registerable && !editable">
             <button *ngIf="event.registered" mat-flat-button (click)="eventAction('unregister')" color="warn" class="action-button">
                 <mat-icon>event</mat-icon>
                 RSVPed
@@ -46,14 +46,16 @@
         </div>
 
         <div *ngIf="editable">            
-            <button mat-stroked-button *ngIf="!event.registered" (click)="eventAction('edit')" color="accent" class="action-button">
+            <button mat-stroked-button *ngIf="!event.registered" (click)="eventAction('edit')" color="primary" class="action-button">
                 <mat-icon>edit</mat-icon>
                 Edit
             </button>
         </div>
 
         <a mat-stroked-button color="primary" href="https://maps.google.com/?q={{event.location[1]}},{{ event.location[0]}}" target="_blank">
-            Location in Maps </a>
+            <mat-icon>map</mat-icon>
+            Location in Maps 
+        </a>
             
     </mat-card-actions>
     <mat-card-footer>
