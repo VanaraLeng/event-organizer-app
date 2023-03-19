@@ -29,4 +29,15 @@ export class EventService {
     return this.client.post<IResult<any>>(environment.SERVER_BASE_URL + '/api/events', event);
   }
 
+  getEventById(id: string) {
+    return this.client.get<IResult<any>>(environment.SERVER_BASE_URL + '/api/events/' + id);
+  }
+
+  update(event: any, id: string) {
+    return this.client.put<IResult<any>>(environment.SERVER_BASE_URL + '/api/events/' + id, event);
+  }
+
+  delete(id: string) {
+    return this.client.delete<IResult<any>>(environment.SERVER_BASE_URL + '/api/events/' + id);
+  }
 }

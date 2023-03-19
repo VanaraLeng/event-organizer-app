@@ -43,8 +43,8 @@ export class CreateEventComponent {
     const params = {
       "title": this.firstFormGroup.value.title,
       "description": this.firstFormGroup.value.description,
-      "startAt": this.firstFormGroup.value.startDate?.getMilliseconds(),
-      "endAt": this.firstFormGroup.value.endDate?.getMilliseconds(),
+      "startAt": this.firstFormGroup.value.startDate?.getTime(),
+      "endAt": this.firstFormGroup.value.endDate?.getTime(),
       "location": [this.secondFormGroup.value.latitude, this.secondFormGroup.value.longitude],
       "seatLimit": this.secondFormGroup.value.seatLimit
     }
