@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router, UrlSerializer } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import IEvent from '../IEvent.interface';
 import IResult from '../IResult.interface';
@@ -10,6 +11,8 @@ import IResult from '../IResult.interface';
 })
 export class EventService {
   private client = inject(HttpClient)
+
+  editEvent?: IEvent
 
   constructor(private router: Router, private urlSerializer: UrlSerializer) { }
 
