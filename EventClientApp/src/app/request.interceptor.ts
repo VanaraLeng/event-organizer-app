@@ -18,9 +18,10 @@ export class RequestInterceptor implements HttpInterceptor {
     if (this.userService.isLoggedIn()) {
       const token = this.userService.state$.value.token;
       request = request.clone({
-        setHeaders: { 'Authorization': `Bearer ${token}` }
+        setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
+
     
       return next.handle(request);
   }

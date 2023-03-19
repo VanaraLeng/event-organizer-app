@@ -1,0 +1,53 @@
+<mat-card class="my-card">
+    <mat-card-header>
+        <mat-card-title>{{event.title}}</mat-card-title>
+        <mat-card-subtitle>{{event.createdBy.firstName}} {{event.createdBy.lastName}} {{ event.createdAt * 1000 | date }}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="spacer"></div>
+    <mat-card-content>
+        <div *ngIf="event.photos.length > 0">
+            <img  mat-card-image class="image" src={{event.photos[0].filename}}
+            alt="Photo of a {{event.title}}">
+        </div>
+        
+        <p>{{ event.description }}</p>
+
+        <table>
+            <tr>
+                <td> Date and time</td>
+                <td>: {{ event.startAt * 1000 | date }} to {{ event.endAt * 1000 | date }}
+            </tr>
+
+            <tr>
+                <td>Attendees </td>
+                <td>:
+                    <span class="attendees"> {{ event.attendees.length }} </span>
+                    <span *ngIf="event.attendees.length > 1"> people </span>
+                    <span *ngIf="event.attendees.length < 2"> person </span>
+                    (Max:  {{ event.seatLimit }} )
+                </td>
+            </tr>
+
+        </table>
+        <div class="spacer"></div>
+        <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+        
+        <button *ngIf="event.registered" mat-flat-button (click)="unregister()" color="warn" class="action-button">
+            <mat-icon>event</mat-icon>
+            RSVPed
+        </button>
+
+        <button *ngIf="!event.registered" mat-stroked-button (click)="register()" color="warn" class="action-button">
+            <mat-icon>event</mat-icon>
+            RSVP
+        </button>
+
+        <a mat-stroked-button color="primary" href="https://maps.google.com/?q={{event.location[1]}},{{ event.location[0]}}" target="_blank">
+            Location in Maps </a>
+            
+    </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+</mat-card>

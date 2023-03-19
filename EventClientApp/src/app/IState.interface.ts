@@ -4,6 +4,6 @@ export default interface IState {
     lastName: string,
     email: string,
     bio: string,
-    location: [],
+    location: number[],
     token: string,
 }
