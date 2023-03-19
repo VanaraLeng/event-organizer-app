@@ -34,21 +34,17 @@ export class HomeComponent {
 
     switch (value) {
       case 'recommend':
-        this.getAllEvents({
-          registered: false
-        });
+        this.getAllEvents({});
         break;
 
       case 'popular':
         this.getAllEvents({
-          registered: false,
           popularity: 10
         });
         break;
 
       case 'nearby': {
         this.getAllEvents({
-          registered: false,
           lat: location[0] ?? 0,
           long: location[1] ?? 0,
         });
