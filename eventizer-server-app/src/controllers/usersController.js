@@ -32,7 +32,37 @@ async function signup(req, res, next) {
   }
 }
 
+async function uploadPhoto(req, res, next) {
+  try {
+    const { user_id } = req.params;
+    const photo = { filename: req.file.filename };
+    const result = await Users.updateOne(
+      { _id: user_id },
+      { $set: { photo: photo } }
+    );
+    res.json({ success: true, data: { result: result } });
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function getPhoto(req, res, next) {
+  try {
+    const { user_id } = req.params;
+    const result = await Users.findOne(
+      { _id: user_id },
+      { photo: 1 }
+    );
+    if (!result) throw new BadRequestError('no user found');
+    res.json({ success: true, data: { photos: [result.photo] } });
+  } catch (e) {
+    next(e);
+  }
+}
+
 module.exports = {
   login,
-  signup
+  signup,
+  uploadPhoto,
+  getPhoto
 }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const picturesSchema = mongoose.Schema({
+const photosSchema = mongoose.Schema({
   filename: String
 })
 
@@ -11,7 +11,7 @@ const usersSchema = mongoose.Schema({
   password: { type: String, required: true },
   bio: { type: String },
   location: [Number],
-  photo: picturesSchema
+  photo: photosSchema
 });
 
 const userSchema = mongoose.Schema({
@@ -20,7 +20,7 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true },
   bio: { type: String },
   location: [Number],
-  photo: picturesSchema
+  photo: photosSchema
 })
 
 const eventsSchema = mongoose.Schema({
@@ -29,12 +29,12 @@ const eventsSchema = mongoose.Schema({
   createdBy: { type: userSchema, required: true },
   startAt: { type: Number, required: true },
   endAt: { type: Number, required: true },
-  location: {type: [Number], index: '2d'},
+  location: { type: [Number], index: '2d' },
   seatLimit: { type: Number, required: true },
   attendees: [userSchema],
-  photos: [picturesSchema],
-  createdAt: {type: Number, required: true},
-  updatedAt: {type: Number, required: true}
+  photos: [photosSchema],
+  createdAt: { type: Number, required: true },
+  updatedAt: { type: Number, required: true }
 });
 
 module.exports = {
