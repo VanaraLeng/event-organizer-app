@@ -34,11 +34,6 @@ function initializeAppFactory(userService: UserService): () => void {
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: AppComponent, pathMatch: 'full', canActivate: [ ()=> { 
-        const isLoggedIn = inject(UserService).isLoggedIn();
-        if (!isLoggedIn) { inject(Router).navigate(['auth', 'login', '']) };
-        return  isLoggedIn;
-      }]  },
       { path: '', pathMatch: 'full', redirectTo: '/event' },
       { path: 'auth', loadChildren: ()=> import('./auth/auth.module').then(module => module.AuthModule )},
       { path: 'event', loadChildren: ()=> import('./event/event.module').then(module => module.EventModule )},
