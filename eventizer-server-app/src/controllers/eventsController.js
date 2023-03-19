@@ -48,7 +48,7 @@ async function getEventById(req, res, next) {
 
 async function addNewEvent(req, res, next) {
   try {
-    const timestamp = Date.now();
+    const timestamp = Math.floor(Date.now() / 1000);
     const newEvent = new Events({
       ...req.body,
       createdBy: req.user,
@@ -67,7 +67,7 @@ async function updateEventById(req, res, next) {
     const { event_id } = req.params;
     const result = await Events.updateOne(
       { _id: event_id, "createdBy._id": req.user._id },
-      { $set: { ...req.body, updatedAt: Date.now() } }
+      { $set: { ...req.body, updatedAt: Math.floor(Date.now() / 1000) } }
     );
     res.json({ success: true, data: { result: result } });
   } catch (e) {
@@ -92,7 +92,7 @@ async function registerEventById(req, res, next) {
     let result = await Events.findOne(
       { _id: event_id, "createdBy._id": req.user._id }
     );
-    if (result) throw new BadRequestError('creator not allow to register');
+    if (result) res.json({ success: false, message: 'creator not allow to register' });
     if (action === "register") {
       result = await Events.updateOne(
         { _id: event_id },
