@@ -8,14 +8,13 @@ import IEvent from 'src/app/IEvent.interface';
 })
 export class EventCardComponent {
   @Input() event!: IEvent
-  @Output() onRsvp = new EventEmitter<{ _id: string}>()
-  @Output() onUnrsvp = new EventEmitter<{ _id: string}>()
+  @Input() editable = false
+  @Input() registerable = false
 
-  unregister() {
-    this.onUnrsvp.emit({ _id:  this.event._id })
+  @Output() action = new EventEmitter<string>()
+
+  eventAction(type: string) {
+    this.action.emit(type)
   }
 
-  register() {
-    this.onRsvp.emit({ _id:  this.event._id })
-  }
 }

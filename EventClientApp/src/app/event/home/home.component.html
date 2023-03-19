@@ -18,5 +18,11 @@
 </mat-toolbar>
 
 <div *ngFor="let item of items"> 
-  <event-card [event]= "item" (onRsvp)="onRsvp(item)" (onUnrsvp)="onUnrsvp(item)"/>
+  <event-card 
+  [event]= "item"
+  [editable]="false"
+  [registerable]="userService.isLoggedIn()"
+  (action)="cardEventAction(item, $event)"
+
+  />
 </div> 

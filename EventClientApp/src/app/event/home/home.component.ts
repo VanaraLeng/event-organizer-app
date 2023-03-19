@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import IEvent from 'src/app/IEvent.interface';
 import { UserService } from 'src/app/user.service';
 import { EventService } from '../event.service';
@@ -20,6 +21,10 @@ export class HomeComponent {
   notification = inject(MatSnackBar);
 
   startBefore?: number;
+
+  constructor(private router: Router) {
+
+  }
 
   ngAfterViewInit() {
     this.getAllEvents({ registered: false });
@@ -75,6 +80,18 @@ export class HomeComponent {
         this.notification.open(e.message, 'Dismiss')
       }
     })
+  }
+
+  cardEventAction(event: IEvent, type: string) {
+    switch(type) {
+      case 'register': 
+        this.onRsvp(event)
+        break;
+        
+      case 'unregister': 
+        this.onUnrsvp(event)
+        break;
+    }
   }
 
   onRsvp(event: IEvent) {
