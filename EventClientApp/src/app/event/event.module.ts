@@ -10,6 +10,8 @@ import { MaterialModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UpdateEventComponent } from './update-event/update-event.component';
+import { ListEventComponent } from './list-event/list-event.component';
+import { ViewEventComponent } from './view-event/view-event.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { UpdateEventComponent } from './update-event/update-event.component';
     CreateEventComponent,
     EventCardComponent,
     UpdateEventComponent,
+    ListEventComponent,
+    ViewEventComponent
   ],
   imports: [
     CommonModule,
@@ -24,10 +28,10 @@ import { UpdateEventComponent } from './update-event/update-event.component';
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild([
-      { path: '', component: HomeComponent},
+      { path: '', component: HomeComponent },
       { path: 'create', component: CreateEventComponent },
       { path: 'update', component: UpdateEventComponent },
-      { path: '**', redirectTo: ''}
+      { path: '**', redirectTo: '' }
     ])
   ]
 })
