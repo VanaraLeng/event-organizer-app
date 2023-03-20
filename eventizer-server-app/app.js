@@ -1,4 +1,6 @@
 // dependencies
+require('dotenv').config({ path: './.env' });
+
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -8,13 +10,13 @@ const usersRouter = require('./src/routes/usersRouter');
 const eventsRouter = require('./src/routes/eventsRouter');
 const photosRouter = require('./src/routes/photosRouter');
 const { BadRequestError, NotFoundError, UnauthorizedError } = require('./src/utils/error');
-const { MONGODB_URI } = require('./configs.json')
 
 // initialisations
+
 const app = express();
 (async function () {
   try {
-    await mongoose.connect(MONGODB_URI)
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('connected to db');
   } catch (e) {
     console.log('fail to connect to db');

@@ -1,7 +1,5 @@
-const fs = require('fs');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY, saltRounds } = require('../../configs.json');
 const Users = require('../models/usersModel');
 const { UnauthorizedError } = require('../utils/error');
 
@@ -12,7 +10,7 @@ async function login(req, res, next) {
     if (!user) res.json({ success: false, message: 'incorrect email' });
     const result = await bcrypt.compare(password, user.password);
     if (!result) res.json({ success: false, message: 'incorrect password' });
-    jwt.sign({ ...user, password: null }, SECRET_KEY, (err, token) => {
+    jwt.sign({ ...user, password: null }, process.env.SECRET_KEY, (err, token) => {
       res.json({ success: true, data: { token: token } });
     });
   } catch (e) {
@@ -22,12 +20,12 @@ async function login(req, res, next) {
 
 async function signup(req, res, next) {
   try {
-    const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const hashPassword = await bcrypt.hash(req.body.password, process.env.saltRounds);
     const user = { ...req.body, password: hashPassword };
     if (req.body.photo) user.photo = { filename: req.body.photo };
     const newUser = new Users(user);
     await newUser.save();
-    jwt.sign({ ...req.body, password: null }, SECRET_KEY, (err, token) => {
+    jwt.sign({ ...req.body, password: null }, process.env.SECRET_KEY, (err, token) => {
       res.json({ success: true, data: { token: token } });
     });
   } catch (e) {
