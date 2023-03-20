@@ -5,6 +5,7 @@ import IResult from './IResult.interface';
 import IState from './IState.interface';
 import { environment } from '../environments/environment'
 import { Users } from "./models/User";
+import { IUser } from './IUser.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,14 @@ export class UserService {
 
   signup(user: any) {
     return this.client.post<IResult<Users>>(environment.SERVER_BASE_URL + '/api/users/signup', user);
+  }
+
+  getUser(_id: string) {
+    return this.client.get<IResult<{user: IUser}>>(environment.SERVER_BASE_URL + '/api/users/' + _id);
+  }
+
+  updateUser(_id: string, user: any) {
+    return this.client.put<IResult<{result: any}>>(environment.SERVER_BASE_URL + '/api/users/' + _id, user);
   }
 
   // Helper methods

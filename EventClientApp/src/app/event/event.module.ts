@@ -7,6 +7,7 @@ import { CreateEventComponent } from './create-event/create-event.component';
 
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
+import { MatTableModule } from '@angular/material/table' 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UpdateEventComponent } from './update-event/update-event.component';
@@ -14,6 +15,7 @@ import { ListEventComponent } from './list-event/list-event.component';
 import { ViewEventComponent } from './view-event/view-event.component';
 import { MyEventComponent } from './my-event/my-event.component';
 import { UserService } from '../user.service';
+import { AttendeesComponent } from './attendees/attendees.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +25,13 @@ import { UserService } from '../user.service';
     UpdateEventComponent,
     ListEventComponent,
     ViewEventComponent,
-    MyEventComponent
+    MyEventComponent,
+    AttendeesComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    MatTableModule,
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild([
@@ -36,6 +40,7 @@ import { UserService } from '../user.service';
       { path: 'create', component: CreateEventComponent },
       { path: 'update', component: UpdateEventComponent },
       { path: 'list', component: ListEventComponent },
+      { path: 'attendees', component: AttendeesComponent},
       { path: '**', redirectTo: '' }
     ])
   ]

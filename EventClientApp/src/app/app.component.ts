@@ -38,7 +38,7 @@ import { Router } from '@angular/router';
           <span> Eventizer</span>
           <span class="example-spacer"></span>
 
-          <button mat-fab extended *ngIf="userService.isLoggedIn()"> 
+          <button mat-fab extended *ngIf="userService.isLoggedIn()" (click)="viewProfile()"> 
             <mat-icon>account_circle</mat-icon>
             {{ userService.state$.value.firstName | titlecase }} {{ userService.state$.value.lastName | titlecase }}
           </button>
@@ -108,4 +108,8 @@ export class AppComponent {
     this.router.navigate(['','auth','login']);
   }
 
+  viewProfile() {
+    const id = this.userService.state$.getValue()._id;
+    this.router.navigate(['', 'user', id]);
+  }
 }

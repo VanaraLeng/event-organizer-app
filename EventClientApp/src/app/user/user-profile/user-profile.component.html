@@ -1,0 +1,37 @@
+<h1 class="title"> My Profile </h1>
+<div *ngIf="user">
+  <div *ngIf="photoUrl">
+    <img src={{photoUrl}} alt="Photo of {{user.firstName}} {{user.lastName}}">
+  </div>
+  <br>
+  <form class="form" [formGroup]="form" (ngSubmit)="update()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="first name" formControlName="firstname" required>
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="last name" formControlName="lastname" required>
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="email" formControlName="email" required>
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Bio</mat-label>
+      <input matInput placeholder="about me" formControlName="bio" required>
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+    <br>
+
+    <!-- todo: need to add location here! -->
+
+    <button mat-raised-button color="accent" class="full-width" [disabled]="form.invalid">Update</button>
+  </form>
+</div>
