@@ -1,10 +1,9 @@
 const fs = require('fs');
-const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY, saltRounds } = require('../configs/configs.json');
+const { SECRET_KEY, saltRounds } = require('../../configs.json');
 const Users = require('../models/usersModel');
-const { BadRequestError, UnauthorizedError } = require('../utils/error');
+const { UnauthorizedError } = require('../utils/error');
 
 async function login(req, res, next) {
   try {
@@ -48,6 +47,7 @@ async function getUserById(req, res, next) {
 
 async function updateUserById(req, res, next) {
   try {
+    console.log(req.body);
     const { user_id } = req.params;
     if (req.user._id != user_id) throw new UnauthorizedError('not authorized to update user details');
     const result = await Users.updateOne(

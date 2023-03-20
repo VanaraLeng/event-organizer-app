@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY } = require('../configs/configs.json');
+const { SECRET_KEY } = require('../../configs.json');
 const { UnauthorizedError } = require('../utils/error');
 
 async function verifyToken(req, res, next) {

@@ -1,5 +1,4 @@
 // dependencies
-const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -7,15 +6,15 @@ const cors = require('cors');
 
 const usersRouter = require('./src/routes/usersRouter');
 const eventsRouter = require('./src/routes/eventsRouter');
+const photosRouter = require('./src/routes/photosRouter');
 const { BadRequestError, NotFoundError, UnauthorizedError } = require('./src/utils/error');
-const upload = require('./src/utils/setupMulter');
-const { uploadPhoto } = require('./src/controllers/photosController');
+const { MONGODB_URI } = require('./configs.json')
 
 // initialisations
 const app = express();
 (async function () {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/eventizer')
+    await mongoose.connect(MONGODB_URI)
     console.log('connected to db');
   } catch (e) {
     console.log('fail to connect to db');
@@ -30,12 +29,11 @@ app.disable('x-powered-by');
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
-app.use('/api/photos', express.static(path.join(__dirname, 'assets', 'photos')));
 
 // routers
-app.post('/api/photos', upload.fields([{ name: 'photos', maxCount: 3 }]), uploadPhoto);
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
+app.use('/api/photos', photosRouter);
 
 app.all('*', (req, res, next) => {
   next(new NotFoundError("api not found"));
