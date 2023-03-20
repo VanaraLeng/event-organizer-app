@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from './material.module';
+import { SimpleDailogComponent } from './simple-dailog/simple-dailog.component';
 
 function initializeAppFactory(userService: UserService): () => void {
   return () => {
@@ -27,7 +28,8 @@ function initializeAppFactory(userService: UserService): () => void {
   declarations: [
     AppComponent,
     MenuComponent,
-    AppNavComponent
+    AppNavComponent,
+    SimpleDailogComponent
   ],
   imports: [
     BrowserModule,
