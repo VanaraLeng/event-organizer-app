@@ -22,14 +22,13 @@ async function signup(req, res, next) {
   try {
     const hashPassword = await bcrypt.hash(req.body.password, +process.env.saltRounds);
     const user = { ...req.body, password: hashPassword };
-    if (req.body.photo) user.photo = { filename: req.body.photo };
+    user.photo = { filename: req.body.photo };
     const newUser = new Users(user);
     await newUser.save();
     jwt.sign({ ...req.body, password: null }, process.env.SECRET_KEY, (err, token) => {
       res.json({ success: true, data: { token: token } });
     });
   } catch (e) {
-    console.log(e);
     res.json({ success: false, message: 'email already exist' });
   }
 }
