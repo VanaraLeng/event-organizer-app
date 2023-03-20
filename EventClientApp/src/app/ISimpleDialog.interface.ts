@@ -1,4 +1,4 @@
-export default interface SimpleDialogInterface {
+export default interface ISimpleDialog {
     title: string,
     message: string,
     okButton?: string,

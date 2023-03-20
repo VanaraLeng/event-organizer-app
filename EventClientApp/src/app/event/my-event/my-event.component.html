@@ -28,6 +28,7 @@
   <event-card 
   [event]= "item"
   [editable]="isEditable"
+  [deleteable]="isDeleteable"
   [registerable]="userService.isLoggedIn()"
   (action)="cardEventAction(item, $event)"
   />
