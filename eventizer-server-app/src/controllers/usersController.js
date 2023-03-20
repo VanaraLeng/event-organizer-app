@@ -20,7 +20,7 @@ async function login(req, res, next) {
 
 async function signup(req, res, next) {
   try {
-    const hashPassword = await bcrypt.hash(req.body.password, process.env.saltRounds);
+    const hashPassword = await bcrypt.hash(req.body.password, +process.env.saltRounds);
     const user = { ...req.body, password: hashPassword };
     if (req.body.photo) user.photo = { filename: req.body.photo };
     const newUser = new Users(user);
@@ -29,6 +29,7 @@ async function signup(req, res, next) {
       res.json({ success: true, data: { token: token } });
     });
   } catch (e) {
+    console.log(e);
     res.json({ success: false, message: 'email already exist' });
   }
 }
