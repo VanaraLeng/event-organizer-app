@@ -16,6 +16,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
         MatStepperModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatDialogModule,
     ],
     providers: [
         { provide: MatCardModule }
@@ -58,7 +60,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
         MatStepperModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatDialogModule,
     ]
 
 })

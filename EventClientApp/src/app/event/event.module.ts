@@ -11,7 +11,6 @@ import { MatTableModule } from '@angular/material/table'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UpdateEventComponent } from './update-event/update-event.component';
-import { ListEventComponent } from './list-event/list-event.component';
 import { ViewEventComponent } from './view-event/view-event.component';
 import { MyEventComponent } from './my-event/my-event.component';
 import { UserService } from '../user.service';
@@ -23,10 +22,9 @@ import { AttendeesComponent } from './attendees/attendees.component';
     CreateEventComponent,
     EventCardComponent,
     UpdateEventComponent,
-    ListEventComponent,
     ViewEventComponent,
     MyEventComponent,
-    AttendeesComponent
+    AttendeesComponent,
   ],
   imports: [
     CommonModule,
@@ -39,10 +37,9 @@ import { AttendeesComponent } from './attendees/attendees.component';
       { path: 'me', component: MyEventComponent, canActivate: [() => { return inject(UserService).isLoggedIn() }] },
       { path: 'create', component: CreateEventComponent },
       { path: 'update', component: UpdateEventComponent },
-      { path: 'list', component: ListEventComponent },
       { path: 'attendees', component: AttendeesComponent},
       { path: '**', redirectTo: '' }
-    ])
+    ]),
   ]
 })
 export class EventModule { }
