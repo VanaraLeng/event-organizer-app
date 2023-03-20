@@ -22,11 +22,6 @@ export class RequestInterceptor implements HttpInterceptor {
         setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
     return next.handle(request);
   }
 }
