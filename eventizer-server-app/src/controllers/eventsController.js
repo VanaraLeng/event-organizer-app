@@ -93,7 +93,7 @@ async function registerEventById(req, res, next) {
       { _id: event_id, "createdBy._id": req.user._id }
     );
     if (result) res.json({ success: false, message: 'creator not allow to register' });
-    if (action === "register") {
+    else if (action === "register") {
       result = await Events.updateOne(
         { _id: event_id },
         { $push: { attendees: req.user } }
