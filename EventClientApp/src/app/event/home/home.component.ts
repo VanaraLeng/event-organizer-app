@@ -59,7 +59,7 @@ export class HomeComponent {
   }
 
   onStartDateValueChange(value: Date) {
-    this.startBefore = value.getTime() / 1000
+    this.startBefore = value.getTime()
     const sort = this.sorted ?? "recommend";
     this.onSortButtonGroupValChange(sort)
   }

@@ -5,7 +5,7 @@
             <a mat-button color="primary" class="username-link" [routerLink]="['','user', event.createdBy._id]"> 
                 {{event.createdBy.firstName | titlecase}} {{event.createdBy.lastName | titlecase}}
             </a>
-            ● {{ event.createdAt| date }}</mat-card-subtitle>
+            ● {{ event.createdAt| date: 'MMM dd, yyyy HH:mm' }}</mat-card-subtitle>
     </mat-card-header>
     <div class="spacer"></div>
     <mat-card-content>
@@ -19,7 +19,7 @@
         <table>
             <tr>
                 <td> Date and time</td>
-                <td>: {{ event.startAt | date }} to {{ event.endAt | date }}
+                <td>: {{ event.startAt | date : 'MMM dd, yyyy HH:mm' }} — {{ event.endAt | date : 'MMM dd, yyyy HH:mm'  }}
             </tr>
 
             <tr>

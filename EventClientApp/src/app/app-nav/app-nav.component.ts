@@ -28,7 +28,7 @@ import { map, shareReplay } from 'rxjs/operators';
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
-          <span>EventClientApp</span>
+          <span>Eventizer</span>
         </mat-toolbar>
         <!-- Add Content Here -->
       </mat-sidenav-content>

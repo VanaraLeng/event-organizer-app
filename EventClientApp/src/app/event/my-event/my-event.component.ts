@@ -59,7 +59,7 @@ export class MyEventComponent {
   }
 
   onStartDateValueChange(value: Date) {
-    this.startBefore = value.getTime() / 1000
+    this.startBefore = value.getTime()
   }
 
   getAllEvents(query: any) {
