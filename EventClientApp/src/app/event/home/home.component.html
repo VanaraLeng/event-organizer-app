@@ -8,12 +8,12 @@
   
   <span class="spacer"></span>
   
-  <mat-form-field class="startBefore" appearance="outline" color="accent">
+  <mat-form-field class="startBefore" appearance="fill" color="accent">
     <mat-label>Start Before</mat-label>
-    <input matInput [matDatepicker]="picker" (dateInput)="onStartDateValueChange($event.value)" (dateChange)="onStartDateValueChange($event.value)">
+    <input matInput [matDatepicker]="picker" (dateChange)="onStartDateValueChange($event.value)">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker ngDefaultControl></mat-datepicker>
-</mat-form-field>
+  </mat-form-field>
 
 
 

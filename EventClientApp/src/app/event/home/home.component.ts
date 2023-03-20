@@ -34,11 +34,12 @@ export class HomeComponent {
     // Clear current list 
     this.items = []
 
-
     const location = this.userService.state$.value.location;
+    this.sorted = value
 
     switch (value) {
       case 'recommend':
+        
         this.getAllEvents({});
         break;
 
@@ -59,6 +60,8 @@ export class HomeComponent {
 
   onStartDateValueChange(value: Date) {
     this.startBefore = value.getTime() / 1000
+    const sort = this.sorted ?? "recommend";
+    this.onSortButtonGroupValChange(sort)
   }
 
   getAllEvents(query: any) {

@@ -1,10 +1,6 @@
 .my-card {
   max-width: 600px;
-  margin: 12px auto;
-}
-
-.attendees {
-  color: darkcyan
+  margin: 16px auto;
 }
 
 .image {
@@ -17,8 +13,14 @@ button {
 
 .action-button {
   width:  150px;
+  z-index: 0;
 }
 
 .spacer {
   height: 10px;
+}
+
+.username-link {
+  padding: 0;
+  margin-top: -3px;
 }

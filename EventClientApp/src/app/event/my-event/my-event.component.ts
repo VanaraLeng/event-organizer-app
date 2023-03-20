@@ -12,15 +12,12 @@ import { EventService } from '../event.service';
 })
 export class MyEventComponent {
   items: IEvent[] = []
-
-  sorted?: string
-  eventService = inject(EventService);
-  userService = inject(UserService);
-
-  notification = inject(MatSnackBar);
-
   startBefore?: number;
   isEditable = false
+
+  eventService = inject(EventService);
+  userService = inject(UserService);
+  notification = inject(MatSnackBar);
 
   constructor(private router: Router) {
 
@@ -30,8 +27,6 @@ export class MyEventComponent {
     this.isEditable = true
     this.getAllEvents({ registered : false });
   }
-
-
 
   onGroupChange(value: string) {
     // Clear current list 

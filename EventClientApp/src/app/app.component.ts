@@ -16,8 +16,11 @@ import { Router } from '@angular/router';
         <mat-toolbar> Menu</mat-toolbar>
         
         <mat-nav-list>
-          <a mat-list-item [routerLink]="['','event']">Public Events</a>
-          <a mat-list-item [routerLink]="['','event', 'me']">My Events</a>
+          <a mat-list-item [routerLink]="['','event']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"> Public Events </a>
+          <a mat-list-item [routerLink]="['','event', 'me']" routerLinkActive="active-link">My Events</a>
+          <mat-divider/>
+            <a mat-list-item *ngIf="userService.isLoggedIn()" (click)='logout()' color="accent"> Log Out </a>
+            <a mat-list-item  *ngIf="!userService.isLoggedIn()" (click)='login()' color="accent"> Log In / Join </a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -30,11 +33,15 @@ import { Router } from '@angular/router';
             *ngIf="isHandset$ | async">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
-          <mat-icon>event</mat-icon> 
+          <mat-icon>book_online</mat-icon> 
+          <span class="hspace">  </span>
           <span> Eventizer</span>
           <span class="example-spacer"></span>
-          <button mat-raised-button  *ngIf="userService.isLoggedIn()" (click)='logout()' color="accent"> Log Out </button>
-          <button mat-raised-button *ngIf="!userService.isLoggedIn()" (click)='login()' color="accent"> Log In </button>
+
+          <button mat-fab extended *ngIf="userService.isLoggedIn()"> 
+            <mat-icon>account_circle</mat-icon>
+            {{ userService.state$.value.firstName | titlecase }} {{ userService.state$.value.lastName | titlecase }}
+          </button>
         </mat-toolbar>
         
         <!-- Add Content Here -->
@@ -65,6 +72,14 @@ import { Router } from '@angular/router';
 
     .example-spacer {
       flex: 1 1 auto;
+    }
+
+    .active-link {
+      background-color: lightgrey;
+    }
+
+    .hspace {
+      width: 12px;
     }
     
   `]
