@@ -48,6 +48,12 @@ export class UserService {
     return this.client.post<IResult<{ result: any }>>(environment.SERVER_BASE_URL + '/api/photos', formData);
   }
 
+  getLocation(zipcode: string) {
+    // POST https://maps.googleapis.com/maps/api/geocode/json?key=YOUR_API_KEY&components=postal_code:97403
+    //AIzaSyDyX6hKVfj9lMS3bQjGiigSGH32VJIqRwA
+    return this.client.get<any>('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDyX6hKVfj9lMS3bQjGiigSGH32VJIqRwA&components=postal_code:' + zipcode);
+  }
+
   // Helper methods
   private emptyState(): IState {
     return {

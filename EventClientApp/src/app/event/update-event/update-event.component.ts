@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EventService } from '../event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-event',
@@ -28,8 +29,9 @@ export class UpdateEventComponent {
   eventService = inject(EventService);
   notification = inject(MatSnackBar);
 
-  // id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
-  id = '6417f485639c9a9b4496baf6'
+  id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.eventService.getEventById(this.id).subscribe({
@@ -78,6 +80,7 @@ export class UpdateEventComponent {
             horizontalPosition: 'end',
             verticalPosition: 'top', duration: 3 * 1000
           })
+          this.router.navigate(['', 'event', 'me']);
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
         }

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { EventService } from '../event.service';
 
 @Component({
@@ -21,23 +22,14 @@ export class CreateEventComponent {
     longitude: [''],
     seatLimit: ['', Validators.max(100)]
   });
-  // firstFormGroup = inject(FormBuilder).group({
-  //   title: ['AAAA', Validators.required],
-  //   description: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'],
-  //   startDate: [new Date, Validators.required],
-  //   endDate: [new Date, Validators.required]
-  // });
-  // secondFormGroup = inject(FormBuilder).group({
-  //   latitude: ['-91.96503407920258'],
-  //   longitude: ['41.01295385898321'],
-  //   seatLimit: ['20', Validators.max(100)]
-  // });
   thirdFormGroup = inject(FormBuilder).group({
     photo: ['']
   });
 
   eventService = inject(EventService);
   notification = inject(MatSnackBar);
+
+  constructor(private router: Router) { }
 
   onSubmit() {
     const params = {
@@ -58,6 +50,7 @@ export class CreateEventComponent {
             horizontalPosition: 'end',
             verticalPosition: 'top', duration: 3 * 1000
           })
+          this.router.navigate(['', 'event', 'me']);
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
         }
