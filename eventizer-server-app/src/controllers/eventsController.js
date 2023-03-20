@@ -4,7 +4,7 @@ const Events = require('../models/eventsModel');
 async function getAllEvents(req, res, next) {
   try {
     // construct query
-    const { registered, startBefore, popularity, lat, long } = req.query;
+    const { registered, startBefore, popular, lat, long } = req.query;
     const query = {};
     if (req.user) {
       if (req.user.location) query['location'] = { $near: req.user.location };
@@ -12,7 +12,7 @@ async function getAllEvents(req, res, next) {
       else if (registered === "false") query['createdBy._id'] = req.user._id;
     }
     if (startBefore) query['startAt'] = { $lte: startBefore }
-    if (popularity) query['$expr'] = { $gte: [{ $size: "$attendees" }, +popularity] }
+    if (popular) query['$expr'] = { $gt: [{ $size: "$attendees" }, {$multiply: ["$seatLimit", 0.5]} ] }
     if (lat && long) query['location'] = { $near: [+long, +lat] };
 
     // find events
@@ -48,7 +48,7 @@ async function getEventById(req, res, next) {
 
 async function addNewEvent(req, res, next) {
   try {
-    const timestamp = Math.floor(Date.now() / 1000);
+    const timestamp = Date.now();
     const newEvent = new Events({
       ...req.body,
       createdBy: req.user,
@@ -67,7 +67,7 @@ async function updateEventById(req, res, next) {
     const { event_id } = req.params;
     const result = await Events.updateOne(
       { _id: event_id, "createdBy._id": req.user._id },
-      { $set: { ...req.body, updatedAt: Math.floor(Date.now() / 1000) } }
+      { $set: { ...req.body, updatedAt: Date.now() } }
     );
     res.json({ success: true, data: { result: result } });
   } catch (e) {
@@ -110,60 +110,11 @@ async function registerEventById(req, res, next) {
   }
 }
 
-async function uploadEventPhotos(req, res, next) {
-  try {
-    const { event_id } = req.params;
-    const photos = req.files['gallery'];
-    const newPhotos = [];
-    photos.forEach(photo => {
-      newPhotos.push({ filename: photo.filename });
-    });
-    const result = await Events.updateOne(
-      { _id: event_id },
-      { $push: { photos: newPhotos } }
-    )
-    res.json({ success: true, data: { result: result } });
-  } catch (e) {
-    next(e);
-  }
-}
-
-async function getAllEventPhotos(req, res, next) {
-  try {
-    const { event_id } = req.params;
-    const result = await Events.findOne(
-      { _id: event_id },
-      { "photos": 1 }
-    );
-    if (!result) throw new BadRequestError('no event found');
-    res.json({ success: true, data: { photos: result.photos } });
-  } catch (e) {
-    next(e);
-  }
-}
-
-async function getEventPhotoById(req, res, next) {
-  try {
-    const { event_id, photo_id } = req.params;
-    const result = await Events.findOne(
-      { _id: event_id, "photos._id": photo_id },
-      { "photos.$": 1 }
-    );
-    if (!result) throw new BadRequestError('no photo found');
-    res.json({ success: true, data: { photos: result.photos } });
-  } catch (e) {
-    next(e);
-  }
-}
-
 module.exports = {
   getAllEvents,
   getEventById,
   addNewEvent,
   updateEventById,
   deleteEventById,
-  registerEventById,
-  uploadEventPhotos,
-  getAllEventPhotos,
-  getEventPhotoById
+  registerEventById
 }

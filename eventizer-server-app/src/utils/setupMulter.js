@@ -6,15 +6,15 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '..', '..', 'assets', 'photos'));
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '.jpg');
+    cb(null, Date.now() + path.extname(file.originalname));
   },
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype == 'image/jpeg') cb(null, true);
-    else {
-      cb(null, false);
-      return cb(new Error('Only .jpg format is accepted'));
-    }
-  },
+  // fileFilter: (req, file, cb) => {
+  //   if (file.mimetype == 'image/jpeg') cb(null, true);
+  //   else {
+  //     cb(null, false);
+  //     return cb(new Error('Only .jpg format is accepted'));
+  //   }
+  // },
   limits: {
     fileSize: 5000000
   }

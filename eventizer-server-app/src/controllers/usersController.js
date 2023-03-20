@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY, saltRounds } = require('../configs/configs.json');
@@ -22,7 +24,9 @@ async function login(req, res, next) {
 async function signup(req, res, next) {
   try {
     const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
-    const newUser = new Users({ ...req.body, password: hashPassword });
+    const user = { ...req.body, password: hashPassword };
+    if (req.body.photo) user.photo = { filename: req.body.photo };
+    const newUser = new Users(user);
     await newUser.save();
     jwt.sign({ ...req.body, password: null }, SECRET_KEY, (err, token) => {
       res.json({ success: true, data: { token: token } });
@@ -56,40 +60,9 @@ async function updateUserById(req, res, next) {
   }
 }
 
-async function uploadPhoto(req, res, next) {
-  try {
-    const { user_id } = req.params;
-    if (req.user._id != user_id) throw new UnauthorizedError('not authorized to upload photo');
-    const photo = { filename: req.file.filename };
-    const result = await Users.updateOne(
-      { _id: user_id },
-      { $set: { photo: photo } }
-    );
-    res.json({ success: true, data: { result: result } });
-  } catch (e) {
-    next(e);
-  }
-}
-
-async function getPhoto(req, res, next) {
-  try {
-    const { user_id } = req.params;
-    const result = await Users.findOne(
-      { _id: user_id },
-      { photo: 1 }
-    );
-    if (!result) throw new BadRequestError('no user found');
-    res.json({ success: true, data: { photos: [result.photo] } });
-  } catch (e) {
-    next(e);
-  }
-}
-
 module.exports = {
   login,
   signup,
   getUserById,
-  updateUserById,
-  uploadPhoto,
-  getPhoto
+  updateUserById
 }

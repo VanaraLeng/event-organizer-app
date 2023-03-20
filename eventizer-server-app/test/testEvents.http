@@ -9,7 +9,11 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0Y2U2Z
 GET http://localhost:3000/api/events?startBefore=1679512100
 
 ### get all events based on popularity >= 1 attendee
-GET http://localhost:3000/api/events?popularity=3
+GET http://localhost:3000/api/events?popular=true
+
+### get all events based on popularity >= 1 attendee
+GET http://localhost:3000/api/events?registered=true
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE0ZDRkNDFkYzUzYzhiYTUzZTczNDgiLCJmaXJzdE5hbWUiOiJrZWFudSIsImxhc3ROYW1lIjoicmVldmVzIiwiZW1haWwiOiJrZWFudS5yZWV2ZXNAZ21haWwuY29tIiwicGFzc3dvcmQiOm51bGwsImJpbyI6InRoaXMgaXMga2VhbnUiLCJsb2NhdGlvbiI6Wy05MS45NjQzMjM1NjgzNTQwNSw0MS4wMDk5MDczNTE1OTU4N10sIl9fdiI6MCwiaWF0IjoxNjc5MjYwNjgzfQ.3PCGIt0Znqr6dGGs3PRDDwTtTSNbV3D92LnoMw4YPD4
 
 ### get all events that are newest and popularity >= 1
 GET http://localhost:3000/api/events?startBefore=1679512100&popularity=2
