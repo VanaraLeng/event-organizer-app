@@ -21,7 +21,7 @@ export class SignupComponent {
     longitude: [''],
     bio: [''],
     profiles: [''],
-    address: ['']
+    address: ['52557']
   })
   email = new FormControl('', [Validators.required, Validators.email]);
   passwordTyped = new FormControl('', [Validators.required]);

@@ -45,9 +45,10 @@
             <mat-grid-tile [colspan]="2">
                 <mat-form-field appearance="outline" class="full-width custom-padding">
                     <mat-label>Your Zip Code Here</mat-label>
-                    <input type="text" matInput placeholder="Type again" formControlName="address">
+                    <input type="text" matInput placeholder="By default, it will be Fairfield, Iowa"
+                        formControlName="address">
                 </mat-form-field>
-                <button type="button" mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
+                <button type="button" mat-raised-button fxLayout="row" fxLayoutAlign="start"
                     (click)="getGeoLocation()">Get
                     GeoLocation</button>
             </mat-grid-tile>
