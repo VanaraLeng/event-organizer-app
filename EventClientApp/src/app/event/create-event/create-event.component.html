@@ -47,6 +47,16 @@
     <mat-step [stepControl]="secondFormGroup" label="Venue">
         <form [formGroup]="secondFormGroup">
             <mat-grid-list cols="2" rowHeight="4:1">
+                <mat-grid-tile colspan="2">
+                    <mat-form-field appearance="outline" class="full-width custom-padding">
+                        <mat-label>Your Zip Code Here</mat-label>
+                        <input type="text" matInput placeholder="By default, it will be Fairfield, Iowa"
+                            formControlName="address">
+                    </mat-form-field>
+                    <button type="button" mat-raised-button fxLayout="row" fxLayoutAlign="start"
+                        (click)="getGeoLocation()">Get
+                        GeoLocation</button>
+                </mat-grid-tile>
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
                         <mat-label>Latitude</mat-label>
