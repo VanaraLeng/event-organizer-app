@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SimpleDailogComponent } from './simple-dailog/simple-dailog.component';
-import SimpleDialogInterface from './ISimpleDialog.interface';
+import ISimpleDialog from './ISimpleDialog.interface';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent {
   constructor(private router: Router, private breakpointObserver: BreakpointObserver) { }
 
   logout() {
-    const data: SimpleDialogInterface = {
+    const data: ISimpleDialog = {
       title: 'Log out your account',
       message: 'Are you sure want to logout your account?',
       okButton: 'LOG OUT',

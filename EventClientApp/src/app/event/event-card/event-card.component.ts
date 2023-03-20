@@ -10,6 +10,7 @@ export class EventCardComponent {
   @Input() event!: IEvent
   @Input() editable = false
   @Input() registerable = false
+  @Input() deleteable = false
 
   @Output() action = new EventEmitter<string>()
 
