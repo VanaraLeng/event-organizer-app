@@ -25,7 +25,7 @@
             <tr>
                 <td>Attendees </td>
                 <td>:
-                    <span color="accent"> {{ event.attendees.length }} </span>
+                    <span > {{ event.attendees.length }} </span>
                     <span *ngIf="event.attendees.length > 1"> people </span>
                     <span *ngIf="event.attendees.length < 2"> person </span>
 
@@ -37,7 +37,7 @@
             <tr>
                 <td>Max people </td>
                 <td>:
-                    <span color="accent"> {{ event.seatLimit }} </span>
+                    <span> {{ event.seatLimit }} </span>
                     <span *ngIf="event.seatLimit > 1"> people </span>
                     <span *ngIf="event.seatLimit < 2"> person </span>
                 </td>

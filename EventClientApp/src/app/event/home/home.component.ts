@@ -137,4 +137,8 @@ export class HomeComponent {
     this.router.navigate(['', 'event', 'attendees']);
   }
 
+  createEvent(){
+    this.router.navigate(['', 'event', 'create']);
+  }
+
 }

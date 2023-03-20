@@ -1,4 +1,4 @@
-import IUser from './IState.interface'
+import {IUser} from './IUser.interface'
 export default interface IEvent {
     _id : string, 
     title: string,
@@ -11,6 +11,6 @@ export default interface IEvent {
     createdAt: number,
     updatedAt: number,
     attendees: IUser[],
-    photos: { filename: string}[],
+    photos: { filename: string }[],
     registered: boolean
 }
