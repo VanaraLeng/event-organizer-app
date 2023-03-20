@@ -28,13 +28,15 @@ export class SignupComponent {
   signup = true;
   profile = ''
   address = ''
+  columns: number = 2;
 
   userService = inject(UserService);
   notification = inject(MatSnackBar);
   router = inject(Router)
 
-  onNgInit() {
+  ngOnInit() {
     this.signup = true;
+    this.breakPoints();
   }
 
   onSubmit() {
@@ -137,5 +139,28 @@ export class SignupComponent {
       }
     })
   }
+
+  breakPoints() {
+    console.log("Break Points", window.innerWidth);
+
+    switch (true) {
+      case (window.innerWidth <= 480):
+        this.columns = 1;
+        break;
+      case (window.innerWidth > 480 && window.innerWidth <= 640):
+        this.columns = 1;
+        break;
+      case (window.innerWidth > 640 && window.innerWidth <= 992):
+        this.columns = 2;
+        break;
+      default:
+        this.columns = 2;
+    }
+  }
+
+  onResize(event: any) {
+    this.breakPoints();
+  }
+
 
 }

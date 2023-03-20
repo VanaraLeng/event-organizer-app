@@ -1,13 +1,10 @@
 <h1 class="title"> Welcome to create an Event! </h1>
-<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button> -->
-<mat-stepper [linear]="isLinear" #stepper>
+<mat-stepper [linear]="false" #stepper orientation="vertical">
     <!-- orientation="vertical" -->
     <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Event Details</ng-template>
-            <mat-grid-list cols="2" rowHeight="6:1">
+            <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
                         <mat-label>Event Title</mat-label>
@@ -30,7 +27,7 @@
                         <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
                     </mat-form-field>
                 </mat-grid-tile>
-                <mat-grid-tile colspan="2" rowspan="2">
+                <mat-grid-tile rowspan="2">
                     <mat-form-field appearance="outline" class="full-width custom-padding full-height">
                         <mat-label>Description</mat-label>
                         <textarea matInput matInput placeholder="Enter description about your event"
@@ -38,6 +35,11 @@
                         <mat-hint>Please describe about your event</mat-hint>
                     </mat-form-field>
                 </mat-grid-tile>
+                <mat-grid-tile>
+
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight="4:1">
                 <mat-grid-tile colspan="2">
                     <button mat-raised-button matStepperNext>Next</button>
                 </mat-grid-tile>
@@ -46,16 +48,22 @@
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Venue">
         <form [formGroup]="secondFormGroup">
-            <mat-grid-list cols="2" rowHeight="4:1">
-                <mat-grid-tile colspan="2">
+            <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
+                <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
                         <mat-label>Your Zip Code Here</mat-label>
                         <input type="text" matInput placeholder="By default, it will be Fairfield, Iowa"
                             formControlName="address">
                     </mat-form-field>
                     <button type="button" mat-raised-button fxLayout="row" fxLayoutAlign="start"
-                        (click)="getGeoLocation()">Get
+                        (click)="getGeoLocation()" class="geoButton">Get
                         GeoLocation</button>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="outline" class="full-width custom-padding">
+                        <mat-label>Seat Limit</mat-label>
+                        <input matInput formControlName="seatLimit" placeholder="Enter Seats" required>
+                    </mat-form-field>
                 </mat-grid-tile>
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
@@ -69,12 +77,9 @@
                         <input matInput formControlName="longitude" placeholder="Enter Longitude" required>
                     </mat-form-field>
                 </mat-grid-tile>
-                <mat-grid-tile>
-                    <mat-form-field appearance="outline" class="full-width custom-padding">
-                        <mat-label>Seat Limit</mat-label>
-                        <input matInput formControlName="seatLimit" placeholder="Enter Seats" required>
-                    </mat-form-field>
-                </mat-grid-tile>
+
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight="4:1">
                 <mat-grid-tile colspan="2">
                     <button mat-raised-button matStepperPrevious class="margin-10">Back</button>
                     <button mat-raised-button matStepperNext>Next</button>
@@ -84,15 +89,19 @@
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" label="Photos">
         <form [formGroup]="thirdFormGroup">
-            <mat-grid-list cols="2" rowHeight="4:1">
-                <mat-grid-tile>
-                    <mat-grid-tile>
-                        <input #fileInput hidden="true" type="file" formControlName="photo" />
-                        <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
-                            (click)="fileInput.click()">Upload
-                            Photo</button>
-                    </mat-grid-tile>
+            <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
+                <mat-grid-tile class="profile">
+                    <input #fileInput hidden="true" type="file" (change)="uploadPhoto($event)"
+                        formControlName="photo" />
+                    <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
+                        (click)="fileInput.click()">Upload
+                        Photo</button>
+                    <div *ngFor="let item of profile">
+                        &nbsp;{{item}}
+                    </div>
                 </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight="4:1">
                 <mat-grid-tile colspan="2">
                     <button mat-raised-button matStepperPrevious class="margin-10">Back</button>
                     <button mat-raised-button matStepperNext>Next</button>
@@ -102,16 +111,16 @@
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Final Step!</ng-template>
-        <mat-grid-list cols="2" rowHeight="2:1">
-            <mat-grid-tile colspan="2">
+        <!-- <mat-grid-list cols="2" rowHeight="2:1">
+            <mat-grid-tile>
                 <div class="center">
                     <h2>Congratulations! You reached the final step to create an event.</h2>
                     <h6>Let's double check the information</h6>
                 </div>
             </mat-grid-tile>
-        </mat-grid-list>
+        </mat-grid-list> -->
         <mat-grid-list cols="2">
-            <mat-grid-tile class="details" colspan="2">
+            <mat-grid-tile class="details">
                 <table class="table">
                     <tr>
                         <td>Event Title:</td>
@@ -139,7 +148,11 @@
                     </tr>
                     <tr>
                         <td>Event Photos:</td>
-                        <td>{{thirdFormGroup.value.photo}}</td>
+                        <td>
+                            <div *ngFor="let item of profile">
+                                &nbsp;{{item}}
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </mat-grid-tile>

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-update-event',
@@ -20,16 +21,20 @@ export class UpdateEventComponent {
   secondFormGroup = inject(FormBuilder).group({
     latitude: ['-91.96503407920258'],
     longitude: ['41.01295385898321'],
-    seatLimit: ['20', Validators.max(100)]
+    seatLimit: ['20', Validators.max(100)],
+    address: ['']
   });
   thirdFormGroup = inject(FormBuilder).group({
     photo: ['']
   });
 
   eventService = inject(EventService);
+  userService = inject(UserService);
   notification = inject(MatSnackBar);
 
   id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
+  columns = 2;
+  profile: string[] = []
 
   constructor(private router: Router) { }
 
@@ -47,7 +52,8 @@ export class UpdateEventComponent {
           this.secondFormGroup.setValue({
             latitude: event.location[0],
             longitude: event.location[1],
-            seatLimit: event.seatLimit
+            seatLimit: event.seatLimit,
+            address: ""
           })
           this.thirdFormGroup.value.photo = event.photo;
         } else {
@@ -77,10 +83,77 @@ export class UpdateEventComponent {
 
         if (res.success === true) {
           this.notification.open("Thank you for updating event!", "", {
-            horizontalPosition: 'end',
-            verticalPosition: 'top', duration: 3 * 1000
+            duration: 3 * 1000
           })
           this.router.navigate(['', 'event', 'me']);
+        } else {
+          this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      },
+      error: (e) => {
+        this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+      }
+    })
+  }
+
+  breakPoints() {
+    switch (true) {
+      case (window.innerWidth <= 480):
+        this.columns = 1;
+        break;
+      case (window.innerWidth > 480 && window.innerWidth <= 640):
+        this.columns = 1;
+        break;
+      case (window.innerWidth > 640 && window.innerWidth <= 992):
+        this.columns = 2;
+        break;
+      default:
+        this.columns = 2;
+    }
+  }
+
+  onResize(event: any) {
+    this.breakPoints();
+  }
+
+  uploadPhoto(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+
+      const formData = new FormData();
+      formData.append("photos", file);
+
+      this.userService.uploadPhoto(formData).subscribe({
+        next: (res) => {
+          console.log("res ==>", res);
+
+          if (res.success === true) {
+            this.profile.push(...this.profile, res.data.result[0]);
+          } else {
+            this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+          }
+        },
+        error: (e) => {
+          this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      })
+    }
+  }
+
+  getGeoLocation() {
+    console.log('Getting address: ', this.secondFormGroup.value.address);
+    this.userService.getLocation(this.secondFormGroup.value.address ? this.secondFormGroup.value.address : "52557").subscribe({
+      next: (res) => {
+        console.log("res ==>", res);
+
+        if (res.status == 'OK') {
+          this.secondFormGroup.setValue({
+            latitude: res.results[0].geometry.location.lat,
+            longitude: res.results[0].geometry.location.lng,
+            seatLimit: this.secondFormGroup.value.seatLimit ? this.secondFormGroup.value.seatLimit : '',
+            address: this.secondFormGroup.value.address ? this.secondFormGroup.value.address : '',
+          })
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
         }

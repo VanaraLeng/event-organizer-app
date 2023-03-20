@@ -49,3 +49,13 @@ td {
 .fit {
     white-space: nowrap;
 }
+
+.geoButton {
+    display: inline-block;
+    top: -3px;
+    height: 70%;
+}
+
+::ng-deep .mat-grid-tile.profile .mat-grid-tile-content {
+    display: block;
+}

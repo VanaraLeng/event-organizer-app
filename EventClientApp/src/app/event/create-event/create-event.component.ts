@@ -11,7 +11,6 @@ import { UserService } from '../../user.service';
   styleUrls: ['./create-event.component.css']
 })
 export class CreateEventComponent {
-  isLinear = true;
   firstFormGroup = inject(FormBuilder).group({
     title: ['', Validators.required],
     description: [''],
@@ -32,6 +31,10 @@ export class CreateEventComponent {
   userService = inject(UserService);
   notification = inject(MatSnackBar);
 
+  columns: number = 2;
+  linear = true;
+  profile: string[] = []
+
   constructor(private router: Router) { }
 
   onSubmit() {
@@ -41,7 +44,8 @@ export class CreateEventComponent {
       "startAt": this.firstFormGroup.value.startDate?.getTime(),
       "endAt": this.firstFormGroup.value.endDate?.getTime(),
       "location": [this.secondFormGroup.value.latitude, this.secondFormGroup.value.longitude],
-      "seatLimit": this.secondFormGroup.value.seatLimit
+      "seatLimit": this.secondFormGroup.value.seatLimit,
+      "photo": this.profile
     }
 
     this.eventService.create(params).subscribe({
@@ -49,9 +53,12 @@ export class CreateEventComponent {
         console.log("res ==>", res);
 
         if (res.success === true) {
+          // this.notification.open("Thank you for creating event!", "", {
+          //   horizontalPosition: 'end',
+          //   verticalPosition: 'top', duration: 3 * 1000
+          // })
           this.notification.open("Thank you for creating event!", "", {
-            horizontalPosition: 'end',
-            verticalPosition: 'top', duration: 3 * 1000
+            duration: 3 * 1000
           })
           this.router.navigate(['', 'event', 'me']);
         } else {
@@ -85,5 +92,50 @@ export class CreateEventComponent {
         this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
       }
     })
+  }
+
+  breakPoints() {
+    switch (true) {
+      case (window.innerWidth <= 480):
+        this.columns = 1;
+        break;
+      case (window.innerWidth > 480 && window.innerWidth <= 640):
+        this.columns = 1;
+        break;
+      case (window.innerWidth > 640 && window.innerWidth <= 992):
+        this.columns = 2;
+        break;
+      default:
+        this.columns = 2;
+    }
+  }
+
+  onResize(event: any) {
+    this.breakPoints();
+  }
+
+  uploadPhoto(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+
+      const formData = new FormData();
+      formData.append("photos", file);
+
+      this.userService.uploadPhoto(formData).subscribe({
+        next: (res) => {
+          console.log("res ==>", res);
+
+          if (res.success === true) {
+            this.profile.push(...this.profile, res.data.result[0]);
+          } else {
+            this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+          }
+        },
+        error: (e) => {
+          this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      })
+    }
   }
 }
