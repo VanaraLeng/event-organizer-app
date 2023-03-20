@@ -25,7 +25,7 @@ export class MyEventComponent {
 
   ngOnInit() {
     this.isEditable = true
-    this.getAllEvents({ registered : false });
+    this.getAllEvents({ registered: false });
   }
 
   onGroupChange(value: string) {
@@ -75,17 +75,22 @@ export class MyEventComponent {
   }
 
   cardEventAction(event: IEvent, type: string) {
-    switch(type) {
-      case 'register': 
+    switch (type) {
+      case 'register':
         this.onRsvp(event)
         break;
-        
-      case 'unregister': 
+
+      case 'unregister':
         this.onUnrsvp(event)
         break;
 
-        case 'edit':
-          this.edit(event) 
+      case 'edit':
+        this.edit(event)
+        break;
+
+      case 'attendees':
+        this.onShowAttendees(event)
+        break;
     }
   }
 
@@ -122,7 +127,12 @@ export class MyEventComponent {
 
   edit(event: IEvent) {
     this.eventService.editEvent = event
-    this.router.navigate(['','event','create']);
+    this.router.navigate(['', 'event', 'update']);
   }
-  
+
+  onShowAttendees(event: IEvent) {
+    this.eventService.attendees = event.attendees;
+    this.router.navigate(['', 'event', 'attendees']);
+  }
+
 }

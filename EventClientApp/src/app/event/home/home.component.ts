@@ -94,6 +94,10 @@ export class HomeComponent {
       case 'unregister': 
         this.onUnrsvp(event)
         break;
+
+      case 'attendees':
+        this.onShowAttendees(event)
+        break;
     }
   }
 
@@ -126,6 +130,11 @@ export class HomeComponent {
         this.notification.open(e.message, 'Dismiss')
       }
     })
+  }
+
+  onShowAttendees(event: IEvent) {
+    this.eventService.attendees = event.attendees;
+    this.router.navigate(['', 'event', 'attendees']);
   }
 
 }

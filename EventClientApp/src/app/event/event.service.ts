@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import IEvent from '../IEvent.interface';
 import IResult from '../IResult.interface';
+import { IUser } from '../IUser.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class EventService {
   private client = inject(HttpClient)
 
   editEvent?: IEvent
+  attendees?: IUser[]
 
   constructor(private router: Router, private urlSerializer: UrlSerializer) { }
 
