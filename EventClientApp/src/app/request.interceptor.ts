@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 export class RequestInterceptor implements HttpInterceptor {
   userService = inject(UserService);
 
-  constructor() {}
+  constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (this.userService.isLoggedIn()) {
@@ -21,8 +21,6 @@ export class RequestInterceptor implements HttpInterceptor {
         setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
-
-    
-      return next.handle(request);
+    return next.handle(request);
   }
 }
