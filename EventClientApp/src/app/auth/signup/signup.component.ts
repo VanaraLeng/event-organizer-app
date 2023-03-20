@@ -19,11 +19,12 @@ export class SignupComponent {
     latitude: [''],
     longitude: [''],
     bio: [''],
-    profile: [''],
+    profiles: [''],
   })
   email = new FormControl('', [Validators.required, Validators.email]);
   passwordTyped = new FormControl('', [Validators.required]);
   signup = true;
+  profile = ''
 
   userService = inject(UserService);
   notification = inject(MatSnackBar);
@@ -40,7 +41,8 @@ export class SignupComponent {
       "email": this.form.value.email,
       "password": this.form.value.password,
       "bio": this.form.value.bio,
-      "location": [this.form.value.latitude, this.form.value.longitude]
+      "location": [this.form.value.latitude, this.form.value.longitude],
+      "photo": this.profile
     }
 
     this.userService.signup(params).subscribe({
@@ -77,6 +79,31 @@ export class SignupComponent {
     }
 
     return this.email.hasError('passwordTyped') ? 'Wrong Passowrd' : '';
+  }
+
+  uploadPhoto(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+
+      const formData = new FormData();
+      formData.append("photos", file);
+
+      this.userService.uploadPhoto(formData).subscribe({
+        next: (res) => {
+          console.log("res ==>", res);
+
+          if (res.success === true) {
+            this.profile = res.data.result[0];
+          } else {
+            this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+          }
+        },
+        error: (e) => {
+          this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      })
+    }
   }
 
 }

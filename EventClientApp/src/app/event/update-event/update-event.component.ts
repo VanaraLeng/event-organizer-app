@@ -28,14 +28,13 @@ export class UpdateEventComponent {
   eventService = inject(EventService);
   notification = inject(MatSnackBar);
 
-  id = "64172faccd326f6acbb02c8b"
+  // id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
+  id = '6417f485639c9a9b4496baf6'
 
   ngOnInit() {
-
     this.eventService.getEventById(this.id).subscribe({
       next: (res) => {
         if (res.success === true) {
-          console.log("res ==>", res);
           const event = res.data.events[0];
           this.firstFormGroup.setValue({
             title: event.title,

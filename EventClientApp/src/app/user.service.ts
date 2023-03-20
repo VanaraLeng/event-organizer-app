@@ -36,11 +36,16 @@ export class UserService {
   }
 
   getUser(_id: string) {
-    return this.client.get<IResult<{user: IUser}>>(environment.SERVER_BASE_URL + '/api/users/' + _id);
+    return this.client.get<IResult<{ user: IUser }>>(environment.SERVER_BASE_URL + '/api/users/' + _id);
   }
 
   updateUser(_id: string, user: any) {
-    return this.client.put<IResult<{result: any}>>(environment.SERVER_BASE_URL + '/api/users/' + _id, user);
+    return this.client.put<IResult<{ result: any }>>(environment.SERVER_BASE_URL + '/api/users/' + _id, user);
+  }
+
+  uploadPhoto(formData: any) {
+    // POST http://localhost:3000/api/photos
+    return this.client.post<IResult<{ result: any }>>(environment.SERVER_BASE_URL + '/api/photos', formData);
   }
 
   // Helper methods

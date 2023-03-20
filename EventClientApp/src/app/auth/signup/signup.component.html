@@ -1,7 +1,7 @@
 <div *ngIf="signup">
     <h1 class="title"> Sign Up to Eventizer </h1>
     <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
-        <mat-grid-list cols="2" rowHeight="4:1">
+        <mat-grid-list cols="2" rowHeight="6:1">
             <mat-grid-tile>
                 <mat-form-field appearance="outline" class="full-width custom-padding">
                     <mat-label>First Name</mat-label>
@@ -68,13 +68,16 @@
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
-                <input #fileInput hidden="true" type="file" formControlName="profile" />
+                <input #fileInput hidden="true" (change)="uploadPhoto($event)" type="file" formControlName="profiles" />
                 <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
                     (click)="fileInput.click()">Upload Photo</button>
+                <div>
+                    &nbsp;{{profile}}
+                </div>
             </mat-grid-tile>
             <!--  -->
             <mat-grid-tile colspan="2">
-                <button mat-raised-button color="primary" class=" half-width" type="submit">Submit</button>
+                <button mat-raised-button color="accent" class=" half-width" type="submit">Submit</button>
                 <!-- <button mat-raised-button color="primary" class=" half-width" type="submit"
                     [disabled]="!form.valid">Submit</button> -->
             </mat-grid-tile>

@@ -7,7 +7,7 @@
     <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Event Details</ng-template>
-            <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-list cols="2" rowHeight="6:1">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
                         <mat-label>Event Title</mat-label>
@@ -77,7 +77,7 @@
             <mat-grid-list cols="2" rowHeight="4:1">
                 <mat-grid-tile>
                     <mat-grid-tile>
-                        <input #fileInput hidden="true" type="file" formControlName="profile" />
+                        <input #fileInput hidden="true" type="file" formControlName="photo" />
                         <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
                             (click)="fileInput.click()">Upload
                             Photo</button>
@@ -138,7 +138,7 @@
             <mat-grid-tile colspan="2">
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Start Over</button>
-                <button mat-raised-button color="primary" (click)="onSubmit()">Create Event</button>
+                <button mat-raised-button color="accent" (click)=" onSubmit()">Create Event</button>
             </mat-grid-tile>
         </mat-grid-list>
     </mat-step>
