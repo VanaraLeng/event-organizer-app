@@ -144,7 +144,7 @@ export class UpdateEventComponent {
             this.profile = res.data.result;
             var reader = new FileReader();
             reader.onload = (event: any) => {
-              this.localUrl = event.target.result;
+              this.localUrl = res.data.result;
             }
             reader.readAsDataURL(event.target.files[0]);
           } else {
