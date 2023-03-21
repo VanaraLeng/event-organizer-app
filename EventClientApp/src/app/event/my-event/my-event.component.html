@@ -1,0 +1,39 @@
+  <!-- Toolbar -->
+  <mat-toolbar>
+    <mat-button-toggle-group (change)="onGroupChange($event.value)" value="my-event"> 
+      <mat-button-toggle value="my-event">My Events</mat-button-toggle>
+      <mat-button-toggle value="reserved-event">Registered Events</mat-button-toggle>
+      <mat-button-toggle value="upcoming">Upcoming Event</mat-button-toggle>
+  </mat-button-toggle-group>
+  
+  <span class="spacer"></span>
+  
+  <mat-form-field class="startBefore" appearance="fill" color="accent">
+    <mat-label>Start Before</mat-label>
+    <input matInput [matDatepicker]="picker" (dateInput)="onStartDateValueChange($event.value)" (dateChange)="onStartDateValueChange($event.value)">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker ngDefaultControl></mat-datepicker>
+</mat-form-field>
+
+
+
+</mat-toolbar>
+
+<div *ngIf="items.length == 0" class="center">
+    <h1>No data found </h1>
+    <mat-icon class="icon-large">query_stats</mat-icon>
+</div>
+
+
+<div *ngFor="let item of items"> 
+  <event-card 
+  [event]= "item"
+  [editable]="isEditable"
+  [deleteable]="isDeleteable"
+  [registerable]="userService.isLoggedIn()"
+  (action)="cardEventAction(item, $event)"
+  />
+</div>
+
+<button mat-fab extended color="accent" class="fab" *ngIf="userService.isLoggedIn()" (click)="createEvent()">
+  <mat-icon>add</mat-icon> Create Event</button>

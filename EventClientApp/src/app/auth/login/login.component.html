@@ -1,0 +1,27 @@
+<h1 class="title"> Log in to Eventizer </h1>
+<form class="form" [formGroup]="form" (ngSubmit)="login()">
+  
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="mwa@gmail.com" formControlName="email" required>
+    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field> 
+  <br>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="paswordHidden ? 'password' : 'text'" formControlName="password">
+    
+    <button type="button" mat-icon-button matSuffix (click)="paswordHidden = !paswordHidden" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="paswordHidden">
+      <mat-icon>{{paswordHidden ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <br>
+
+  <button mat-raised-button color="accent" class="full-width" [disabled]="form.invalid">Login</button>
+
+  <br>
+  <br>
+  Don't have account yet? 
+  <button mat-button [routerLink]="['','auth','signup']">Sign Up Now</button>
+</form>

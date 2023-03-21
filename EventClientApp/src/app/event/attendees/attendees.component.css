@@ -1,0 +1,19 @@
+.title {
+  padding-top: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+table {
+  min-width: -webkit-fill-available;
+}
+
+.photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+
+.content {
+  margin: 3% 5%;
+}

@@ -1,0 +1,82 @@
+.title {
+    padding-top: 12px;
+    width: 100%;
+    text-align: center;
+}
+
+.form {
+    margin: 0 auto;
+    min-width: 150px;
+    max-width: 95%;
+    width: 100%;
+    padding: 12px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.custom-padding {
+    padding: 10px;
+}
+
+.half-width {
+    width: 50%;
+}
+
+.divider {
+    width: 40%;
+    display: inline-block;
+}
+
+.divider-content {
+    padding: 10px;
+    font-weight: 700;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: transparent !important;
+}
+
+::ng-deep .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+    padding-top: 3px;
+}
+
+.center {
+    text-align: center;
+}
+
+.thz-header {
+    font-size: xxx-large;
+    padding: 12% 30% 10% 30%;
+    color: #ff4081;
+    font-style: italic;
+}
+
+.thz-content {
+    padding: 10px;
+    font-style: oblique;
+}
+
+::ng-deep .mat-grid-tile.profile .mat-grid-tile-content {
+    display: block;
+}
+
+.geoButton {
+    display: inline-block;
+    top: -12px;
+    height: 70%;
+}
+
+.full-height {
+    height: 95%;
+}
+
+.submitButton {
+    display: block;
+    margin: auto;
+}
+
+.margin-top-custom {
+    margin-top: 5px;
+}

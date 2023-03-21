@@ -1,0 +1,100 @@
+<div *ngIf="signup">
+    <h1 class="title"> Sign Up to Eventizer </h1>
+    <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+        <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="Enter First Name" formControlName="firstname" required>
+                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                    <mat-hint>The name that your parents call you</mat-hint>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Enter Last Name" formControlName="lastname" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Type password" formControlName="password" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Confirm Password</mat-label>
+                    <input type="password" matInput placeholder="Type again" formControlName="confirmPassword" required>
+                    <mat-error *ngIf="passwordTyped.invalid">{{getPwdError()}}</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="example@example.com" formControlName="email" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <!-- <mat-grid-tile>
+                <mat-divider class="divider"></mat-divider>
+                <span class="divider-content">Your Location</span>
+                <mat-divider class="divider"></mat-divider>
+            </mat-grid-tile> -->
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Your Zip Code Here</mat-label>
+                    <input type="text" matInput placeholder="By default, it will be Fairfield, Iowa"
+                        formControlName="address">
+                </mat-form-field>
+                <button type="button" mat-raised-button fxLayout="row" fxLayoutAlign="start" (click)="getGeoLocation()"
+                    class="geoButton">Get
+                    GeoLocation</button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Latitude</mat-label>
+                    <input type="text" matInput placeholder="Type again" formControlName="latitude" readonly="true">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width custom-padding">
+                    <mat-label>Longitude</mat-label>
+                    <input type="text" matInput placeholder="Type again" formControlName="longitude" readonly="true">
+                </mat-form-field>
+            </mat-grid-tile>
+            <!-- <mat-grid-tile>
+                <mat-divider class="divider"></mat-divider>
+                <span class="divider-content">About You</span>
+                <mat-divider class="divider"></mat-divider>
+            </mat-grid-tile> -->
+            <mat-grid-tile rowspan="2">
+                <br>
+                <mat-form-field appearance="outline" class="full-width custom-padding full-height">
+                    <mat-label>Bio</mat-label>
+                    <textarea matInput matInput placeholder="Enter Your Bio" formControlName="bio"></textarea>
+                    <mat-hint>Briefly describe about yourself</mat-hint>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile class="profile" rowspan="2">
+                <input #fileInput hidden="true" (change)="uploadPhoto($event)" type="file" formControlName="profiles" />
+                <button type="button" mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
+                    (click)="fileInput.click()">Upload Photo</button>
+                <div class="margin-top-custom">
+                    &nbsp;
+                    <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 25%">
+                </div>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+        <br>
+        <button mat-raised-button color="accent" class="submitButton half-width" type="submit">Submit</button>
+    </form>
+</div>
+<!-- <div *ngIf="!signup" class="center">
+    <div class="thz-header"> Thank You !</div>
+    <div class="thz-content"> Thank you for signing up in our application.</div>
+    <div class="thz-content"> Let's enjoy the experience!</div>
+    <a mat-raised-button color="accent" class="half-width" type="submit" [routerLink]="['','auth','login']">Login
+        Here</a>
+</div> -->

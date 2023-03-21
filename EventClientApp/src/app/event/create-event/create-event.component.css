@@ -1,0 +1,65 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+    margin-top: 16px;
+}
+
+.title {
+    padding-top: 1%;
+    padding-bottom: 0%;
+    width: 100%;
+    text-align: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.custom-padding {
+    padding: 10px;
+}
+
+.full-height {
+    height: 95%;
+}
+
+.margin-10 {
+    margin-right: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+::ng-deep .details .mat-grid-tile-content {
+    display: block;
+}
+
+table {
+    width: 100%;
+    padding: 0% 3%;
+}
+
+td {
+    padding: 10px;
+}
+
+.fit {
+    white-space: nowrap;
+}
+
+.geoButton {
+    display: inline-block;
+    top: -3px;
+    height: 70%;
+}
+
+::ng-deep .mat-grid-tile.profile .mat-grid-tile-content {
+    display: block;
+}
+
+.margin-top-custom {
+    margin-top: 5px;
+}
