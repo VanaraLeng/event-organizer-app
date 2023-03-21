@@ -162,7 +162,8 @@
                         <td>Event Photos:</td>
                         <td>
                             <div>
-                                <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 25%">
+                                <img [src]="photoBaseUrl+localUrl" *ngIf="localUrl" class="imgPlaceholder"
+                                    style="width: 25%">
                             </div>
                         </td>
                     </tr>

@@ -5,6 +5,7 @@ import { EventService } from '../event.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
 import { Location } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-update-event',
@@ -38,11 +39,13 @@ export class UpdateEventComponent {
   id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
   columns = 2;
   profile = []
-  localUrl = []
+  localUrl = ''
+  photoBaseUrl = environment.PHOTO_BASE_URL
 
   constructor(private router: Router, private _location: Location) { }
 
   ngOnInit() {
+    this.id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : "null"
     this.eventService.getEventById(this.id).subscribe({
       next: (res) => {
         if (res.success === true) {
@@ -66,12 +69,15 @@ export class UpdateEventComponent {
             address: ""
           })
           this.thirdFormGroup.value.photo = event.photo;
+          this.localUrl = event.photo
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+          this.router.navigate(['', 'event', 'me']);
         }
       },
       error: (e) => {
         this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+        this.router.navigate(['', 'event', 'me']);
       }
     })
 
