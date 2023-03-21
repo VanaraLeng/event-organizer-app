@@ -16,12 +16,14 @@ export class UpdateEventComponent {
     title: ['AAAA', Validators.required],
     description: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'],
     startDate: [new Date, Validators.required],
-    endDate: [new Date, Validators.required]
+    endDate: [new Date, Validators.required],
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required]
   });
   secondFormGroup = inject(FormBuilder).group({
     latitude: ['-91.96503407920258'],
     longitude: ['41.01295385898321'],
-    seatLimit: ['20', Validators.max(100)],
+    seatLimit: ['20', Validators.max(100000)],
     address: ['']
   });
   thirdFormGroup = inject(FormBuilder).group({
@@ -43,11 +45,17 @@ export class UpdateEventComponent {
       next: (res) => {
         if (res.success === true) {
           const event = res.data.events[0];
+          let startHours = new Date(event.startAt).getHours() < 10 ? "0" + new Date(event.startAt).getHours() : new Date(event.startAt).getHours();
+          let endHours = new Date(event.endAt).getHours() < 10 ? "0" + new Date(event.endAt).getHours() : new Date(event.endAt).getHours();
+          let startMinutes = new Date(event.startAt).getMinutes() < 10 ? "0" + new Date(event.startAt).getMinutes() : new Date(event.startAt).getMinutes();
+          let endMinutes = new Date(event.endAt).getMinutes() < 10 ? "0" + new Date(event.endAt).getMinutes() : new Date(event.endAt).getMinutes();
           this.firstFormGroup.setValue({
             title: event.title,
             description: event.description,
             startDate: new Date(event.startAt),
-            endDate: new Date(event.endAt)
+            endDate: new Date(event.endAt),
+            startTime: startHours + ":" + startMinutes,
+            endTime: endHours + ":" + endMinutes
           })
           this.secondFormGroup.setValue({
             latitude: event.location[0],
@@ -162,5 +170,39 @@ export class UpdateEventComponent {
         this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
       }
     })
+  }
+
+  starttime() {
+    this.firstFormGroup.setValue({
+      title: this.firstFormGroup.value.title ? this.firstFormGroup.value.title : "",
+      description: this.firstFormGroup.value.description ? this.firstFormGroup.value.description : "",
+      startDate: this.setDateTime(this.firstFormGroup.value.startDate, this.firstFormGroup.value.startTime),
+      endDate: this.firstFormGroup.value.endDate ? this.firstFormGroup.value.endDate : new Date,
+      startTime: this.firstFormGroup.value.startTime ? this.firstFormGroup.value.startTime : "",
+      endTime: this.firstFormGroup.value.endTime ? this.firstFormGroup.value.endTime : ""
+    });
+  }
+
+  endtime() {
+    this.firstFormGroup.setValue({
+      title: this.firstFormGroup.value.title ? this.firstFormGroup.value.title : "",
+      description: this.firstFormGroup.value.description ? this.firstFormGroup.value.description : "",
+      startDate: this.firstFormGroup.value.startDate ? this.firstFormGroup.value.startDate : new Date,
+      endDate: this.setDateTime(this.firstFormGroup.value.endDate, this.firstFormGroup.value.endTime),
+      startTime: this.firstFormGroup.value.startTime ? this.firstFormGroup.value.startTime : "",
+      endTime: this.firstFormGroup.value.endTime ? this.firstFormGroup.value.endTime : ""
+    });
+  }
+
+  setDateTime(date: any, time: any) {
+    let timesArr = time.split(":");
+    let hours = parseInt(timesArr[0]);
+    let minutes = parseInt(timesArr[1]);
+
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    date.setSeconds(0);
+
+    return date;
   }
 }

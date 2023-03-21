@@ -1,10 +1,10 @@
 <h1 class="title"> Welcome to create an Event! </h1>
-<mat-stepper [linear]="false" #stepper orientation="vertical">
+<mat-stepper [linear]="true" #stepper orientation="vertical">
     <!-- orientation="vertical" -->
     <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Event Details</ng-template>
-            <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
+            <mat-grid-list [cols]="columns" rowHeight="85px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
                         <mat-label>Event Title</mat-label>
@@ -22,9 +22,20 @@
                         <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker></mat-date-range-picker>
-
                         <!-- <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
                         <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="outline" class="full-width custom-padding">
+                        <mat-label>Enter event start time</mat-label>
+                        <input type="time" matInput name="startTime" formControlName="startTime" (change)="starttime()">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="outline" class="full-width custom-padding">
+                        <mat-label>Enter event end time</mat-label>
+                        <input type="time" matInput name="endTime" formControlName="endTime" (change)="endtime()">
                     </mat-form-field>
                 </mat-grid-tile>
                 <mat-grid-tile rowspan="2">
@@ -39,7 +50,7 @@
 
                 </mat-grid-tile>
             </mat-grid-list>
-            <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-list cols="2" rowHeight="6:1">
                 <mat-grid-tile colspan="2">
                     <button mat-raised-button matStepperNext>Next</button>
                 </mat-grid-tile>
@@ -48,7 +59,7 @@
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Venue">
         <form [formGroup]="secondFormGroup">
-            <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
+            <mat-grid-list [cols]="columns" rowHeight="85px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline" class="full-width custom-padding">
                         <mat-label>Your Zip Code Here</mat-label>
@@ -79,7 +90,7 @@
                 </mat-grid-tile>
 
             </mat-grid-list>
-            <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-list cols="2" rowHeight="6:1">
                 <mat-grid-tile colspan="2">
                     <button mat-raised-button matStepperPrevious class="margin-10">Back</button>
                     <button mat-raised-button matStepperNext>Next</button>
@@ -89,7 +100,7 @@
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" label="Photos">
         <form [formGroup]="thirdFormGroup">
-            <mat-grid-list [cols]="columns" rowHeight="80px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
+            <mat-grid-list [cols]="columns" rowHeight="85px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
                 <mat-grid-tile class="profile">
                     <input #fileInput hidden="true" type="file" (change)="uploadPhoto($event)"
                         formControlName="photo" />
@@ -101,7 +112,7 @@
                     </div>
                 </mat-grid-tile>
             </mat-grid-list>
-            <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-list cols="2" rowHeight="6:1">
                 <mat-grid-tile colspan="2">
                     <button mat-raised-button matStepperPrevious class="margin-10">Back</button>
                     <button mat-raised-button matStepperNext>Next</button>

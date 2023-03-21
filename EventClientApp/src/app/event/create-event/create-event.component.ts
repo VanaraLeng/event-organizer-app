@@ -15,13 +15,15 @@ export class CreateEventComponent {
     title: ['', Validators.required],
     description: [''],
     startDate: [new Date, Validators.required],
-    endDate: [new Date, Validators.required]
+    endDate: [new Date, Validators.required],
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required]
   });
   secondFormGroup = inject(FormBuilder).group({
     latitude: [''],
     longitude: [''],
     address: ['52557'],
-    seatLimit: ['', Validators.max(100)]
+    seatLimit: ['', Validators.max(100000)]
   });
   thirdFormGroup = inject(FormBuilder).group({
     photo: ['']
@@ -37,21 +39,57 @@ export class CreateEventComponent {
 
   constructor(private router: Router) { }
 
+  starttime() {
+    this.firstFormGroup.setValue({
+      title: this.firstFormGroup.value.title ? this.firstFormGroup.value.title : "",
+      description: this.firstFormGroup.value.description ? this.firstFormGroup.value.description : "",
+      startDate: this.setDateTime(this.firstFormGroup.value.startDate, this.firstFormGroup.value.startTime),
+      endDate: this.firstFormGroup.value.endDate ? this.firstFormGroup.value.endDate : new Date,
+      startTime: this.firstFormGroup.value.startTime ? this.firstFormGroup.value.startTime : "",
+      endTime: this.firstFormGroup.value.endTime ? this.firstFormGroup.value.endTime : ""
+    });
+  }
+
+  endtime() {
+    this.firstFormGroup.setValue({
+      title: this.firstFormGroup.value.title ? this.firstFormGroup.value.title : "",
+      description: this.firstFormGroup.value.description ? this.firstFormGroup.value.description : "",
+      startDate: this.firstFormGroup.value.startDate ? this.firstFormGroup.value.startDate : new Date,
+      endDate: this.setDateTime(this.firstFormGroup.value.endDate, this.firstFormGroup.value.endTime),
+      startTime: this.firstFormGroup.value.startTime ? this.firstFormGroup.value.startTime : "",
+      endTime: this.firstFormGroup.value.endTime ? this.firstFormGroup.value.endTime : ""
+    });
+  }
+
+  setDateTime(date: any, time: any) {
+    let timesArr = time.split(":");
+    let hours = parseInt(timesArr[0]);
+    let minutes = parseInt(timesArr[1]);
+
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    date.setSeconds(0);
+
+    return date;
+  }
+
   onSubmit() {
+    console.log(this.firstFormGroup.value.startDate);
+    console.log(this.firstFormGroup.value.endDate);
     const params = {
       "title": this.firstFormGroup.value.title,
       "description": this.firstFormGroup.value.description,
-      "startAt": this.firstFormGroup.value.startDate?.getTime(),
-      "endAt": this.firstFormGroup.value.endDate?.getTime(),
+      "startAt": new Date(this.firstFormGroup.value.startDate ? this.firstFormGroup.value.startDate : '').getTime(),
+      "endAt": new Date(this.firstFormGroup.value.endDate ? this.firstFormGroup.value.endDate : '').getTime(),
       "location": [this.secondFormGroup.value.latitude, this.secondFormGroup.value.longitude],
       "seatLimit": this.secondFormGroup.value.seatLimit,
       "photo": this.profile
     }
 
+    console.log(params);
+
     this.eventService.create(params).subscribe({
       next: (res) => {
-        console.log("res ==>", res);
-
         if (res.success === true) {
           // this.notification.open("Thank you for creating event!", "", {
           //   horizontalPosition: 'end',
@@ -72,11 +110,8 @@ export class CreateEventComponent {
   }
 
   getGeoLocation() {
-    console.log('Getting address: ', this.secondFormGroup.value.address);
     this.userService.getLocation(this.secondFormGroup.value.address ? this.secondFormGroup.value.address : "52557").subscribe({
       next: (res) => {
-        console.log("res ==>", res);
-
         if (res.status == 'OK') {
           this.secondFormGroup.setValue({
             latitude: res.results[0].geometry.location.lat,
