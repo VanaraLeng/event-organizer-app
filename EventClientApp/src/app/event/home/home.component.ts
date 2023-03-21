@@ -122,8 +122,6 @@ export class HomeComponent {
       next: (res) => {
         if (res.success == true) {
           event.registered = false;
-          event.attendees.push()
-
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3000 })
         }
