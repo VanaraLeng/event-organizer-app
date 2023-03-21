@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { UserService } from '../../user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-event',
@@ -16,8 +17,8 @@ export class CreateEventComponent {
     description: [''],
     startDate: [new Date, Validators.required],
     endDate: [new Date, Validators.required],
-    startTime: ['', Validators.required],
-    endTime: ['', Validators.required]
+    startTime: ['10:00', Validators.required],
+    endTime: ['15:00', Validators.required]
   });
   secondFormGroup = inject(FormBuilder).group({
     latitude: [''],
@@ -35,9 +36,10 @@ export class CreateEventComponent {
 
   columns: number = 2;
   linear = true;
-  profile: string[] = []
+  profile = []
+  localUrl = []
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _location: Location) { }
 
   starttime() {
     this.firstFormGroup.setValue({
@@ -74,8 +76,6 @@ export class CreateEventComponent {
   }
 
   onSubmit() {
-    console.log(this.firstFormGroup.value.startDate);
-    console.log(this.firstFormGroup.value.endDate);
     const params = {
       "title": this.firstFormGroup.value.title,
       "description": this.firstFormGroup.value.description,
@@ -153,16 +153,18 @@ export class CreateEventComponent {
     const file: File = event.target.files[0];
 
     if (file) {
-
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
       const formData = new FormData();
-      formData.append("photos", file);
+      formData.append("photo", file);
 
       this.userService.uploadPhoto(formData).subscribe({
         next: (res) => {
-          console.log("res ==>", res);
-
           if (res.success === true) {
-            this.profile.push(...this.profile, res.data.result[0]);
+            this.profile = res.data.result;
           } else {
             this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
           }
@@ -172,5 +174,8 @@ export class CreateEventComponent {
         }
       })
     }
+  }
+  goback() {
+    this._location.back();
   }
 }

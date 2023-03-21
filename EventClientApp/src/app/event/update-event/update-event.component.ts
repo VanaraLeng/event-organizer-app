@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-update-event',
@@ -36,9 +37,10 @@ export class UpdateEventComponent {
 
   id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
   columns = 2;
-  profile: string[] = []
+  profile = []
+  localUrl = []
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _location: Location) { }
 
   ngOnInit() {
     this.eventService.getEventById(this.id).subscribe({
@@ -82,7 +84,8 @@ export class UpdateEventComponent {
       "startAt": this.firstFormGroup.value.startDate?.getTime(),
       "endAt": this.firstFormGroup.value.endDate?.getTime(),
       "location": [this.secondFormGroup.value.latitude, this.secondFormGroup.value.longitude],
-      "seatLimit": this.secondFormGroup.value.seatLimit
+      "seatLimit": this.secondFormGroup.value.seatLimit,
+      "photo": this.profile
     }
 
     this.eventService.update(params, this.id).subscribe({
@@ -126,18 +129,18 @@ export class UpdateEventComponent {
 
   uploadPhoto(event: any) {
     const file: File = event.target.files[0];
-
     if (file) {
-
       const formData = new FormData();
-      formData.append("photos", file);
-
+      formData.append("photo", file);
       this.userService.uploadPhoto(formData).subscribe({
         next: (res) => {
-          console.log("res ==>", res);
-
           if (res.success === true) {
-            this.profile.push(...this.profile, res.data.result[0]);
+            this.profile = res.data.result;
+            var reader = new FileReader();
+            reader.onload = (event: any) => {
+              this.localUrl = event.target.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
           } else {
             this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
           }
@@ -150,11 +153,8 @@ export class UpdateEventComponent {
   }
 
   getGeoLocation() {
-    console.log('Getting address: ', this.secondFormGroup.value.address);
     this.userService.getLocation(this.secondFormGroup.value.address ? this.secondFormGroup.value.address : "52557").subscribe({
       next: (res) => {
-        console.log("res ==>", res);
-
         if (res.status == 'OK') {
           this.secondFormGroup.setValue({
             latitude: res.results[0].geometry.location.lat,
@@ -204,5 +204,9 @@ export class UpdateEventComponent {
     date.setSeconds(0);
 
     return date;
+  }
+
+  goback() {
+    this._location.back();
   }
 }

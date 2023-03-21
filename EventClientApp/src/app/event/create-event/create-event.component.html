@@ -52,6 +52,7 @@
             </mat-grid-list>
             <mat-grid-list cols="2" rowHeight="6:1">
                 <mat-grid-tile colspan="2">
+                    <button mat-raised-button (click)="goback()" class="margin-10">Go Back</button>
                     <button mat-raised-button matStepperNext>Next</button>
                 </mat-grid-tile>
             </mat-grid-list>
@@ -107,8 +108,8 @@
                     <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
                         (click)="fileInput.click()">Upload
                         Photo</button>
-                    <div *ngFor="let item of profile">
-                        &nbsp;{{item}}
+                    <div class="margin-top-custom">
+                        &nbsp;<img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 25%">
                     </div>
                 </mat-grid-tile>
             </mat-grid-list>
@@ -160,8 +161,8 @@
                     <tr>
                         <td>Event Photos:</td>
                         <td>
-                            <div *ngFor="let item of profile">
-                                &nbsp;{{item}}
+                            <div>
+                                <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 25%">
                             </div>
                         </td>
                     </tr>

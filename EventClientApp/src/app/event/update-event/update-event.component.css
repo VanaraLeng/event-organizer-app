@@ -59,3 +59,7 @@ td {
     top: -3px;
     height: 70%;
 }
+
+.margin-top-custom {
+    margin-top: 5px;
+}
