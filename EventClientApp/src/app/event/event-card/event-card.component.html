@@ -30,12 +30,12 @@
                     <span *ngIf="event.attendees.length < 2"> person </span>
 
                     <a *ngIf="event.attendees.length > 0" mat-button color="primary" (click)="eventAction('attendees')"> 
-                        See more
+                        See who
                     </a>
                 </td>
             </tr>
             <tr>
-                <td>Max people </td>
+                <td>Max attendees </td>
                 <td>:
                     <span> {{ event.seatLimit }} </span>
                     <span *ngIf="event.seatLimit > 1"> people </span>

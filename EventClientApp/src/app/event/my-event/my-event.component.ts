@@ -55,6 +55,14 @@ export class MyEventComponent {
           registered: true
         });
         break;
+
+        case 'upcoming':
+        this.isEditable = false;
+        this.isDeleteable = false;
+        this.getAllEvents({
+          registered: true,
+          startBefore: Date.now() + 3 * 24 * 60 * 60 * 1000 // 3 days
+        });
     }
   }
 
@@ -65,7 +73,7 @@ export class MyEventComponent {
   getAllEvents(query: any) {
 
     // Filter startAt
-    if (this.startBefore !== 0) {
+    if (this.startBefore !== 0 && !query.startBefore) {
       query = { ...query, startBefore: this.startBefore }
     }
 
