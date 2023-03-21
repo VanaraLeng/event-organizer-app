@@ -80,13 +80,14 @@
                 <input #fileInput hidden="true" (change)="uploadPhoto($event)" type="file" formControlName="profiles" />
                 <button type="button" mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
                     (click)="fileInput.click()">Upload Photo</button>
-                <div>
-                    &nbsp;{{profile}}
+                <div class="margin-top-custom">
+                    &nbsp;
                     <img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 25%">
                 </div>
             </mat-grid-tile>
 
         </mat-grid-list>
+        <br>
         <button mat-raised-button color="accent" class="submitButton half-width" type="submit">Submit</button>
     </form>
 </div>

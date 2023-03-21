@@ -91,17 +91,17 @@ export class SignupComponent {
     const file: File = event.target.files[0];
 
     if (file) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
       const formData = new FormData();
       formData.append("photo", file);
 
       this.userService.uploadPhoto(formData).subscribe({
         next: (res) => {
           if (res.success === true) {
+            var reader = new FileReader();
+            reader.onload = (event: any) => {
+              this.localUrl = event.target.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
             this.profile = res.data.result;
           } else {
             this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
