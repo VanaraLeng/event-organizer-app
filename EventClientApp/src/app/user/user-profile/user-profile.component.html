@@ -1,14 +1,15 @@
 <h1 *ngIf="isMe" class="title"> My Profile </h1>
 <h1 *ngIf="!isMe" class="title"> {{user.firstName | titlecase }}'s Profile </h1>
 <div *ngIf="user">
-  
-  <img *ngIf="user.photo.filename" src="{{ photoBaseUrl + user.photo.filename }}" alt="Photo of {{user.firstName + ' ' + user.lastName}}" class="photo">
-  
+
+  <img *ngIf="user.photo.filename" src="{{ photoBaseUrl + user.photo.filename }}"
+    alt="Photo of {{user.firstName + ' ' + user.lastName}}" class="photo">
+
   <br>
   <form class="form" [formGroup]="form" (ngSubmit)="update()">
 
     <div *ngIf="isMe">
-      <input #fileInput hidden="true" (change)="uploadPhoto($event)" type="file" formControlName="photo"/>
+      <input #fileInput hidden="true" (change)="uploadPhoto($event)" type="file" formControlName="photo" />
       <button type="button" mat-stroked-button (click)="fileInput.click()">Upload Photo</button>
     </div>
     <br>
@@ -46,7 +47,7 @@
         <input type="text" matInput placeholder="By default, it will be Fairfield, Iowa" formControlName="address">
       </mat-form-field>
       <button type="button" mat-raised-button fxLayout="row" fxLayoutAlign="start" (click)="getGeoLocation()"
-        class="geoButton">Get GeoLocation</button> 
+        class="geoButton">Get GeoLocation</button>
     </div>
     <br>
 
@@ -58,8 +59,10 @@
     <mat-form-field appearance="outline" class="full-width custom-padding">
       <mat-label>Longitude</mat-label>
       <input type="text" matInput placeholder="Type again" formControlName="longitude" readonly="true">
-  </mat-form-field>
+    </mat-form-field>
 
     <button mat-raised-button color="accent" class="full-width" [disabled]="form.invalid" *ngIf="isMe">Update</button>
   </form>
+
+  <button mat-stroked-button (click)="goback()" class="left-margin">Go Back</button>
 </div>

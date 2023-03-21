@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { map, mergeMap } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,7 +36,7 @@ export class UserProfileComponent {
 
   isMe = false;
 
-  constructor() {
+  constructor(private _location: Location) {
 
     this.activatedRoute.paramMap
       .pipe(
@@ -156,5 +157,9 @@ export class UserProfileComponent {
         this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
       }
     })
+  }
+
+  goback() {
+    this._location.back();
   }
 }
