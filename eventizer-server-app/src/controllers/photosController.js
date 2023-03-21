@@ -22,17 +22,16 @@ function getObject(Bucket, Key) {
 }
 
 async function getPhoto(req, res, next) {
-  try {
-    const { photo_key } = req.params;
-    getObject(process.env.S3_BUCKET, photo_key)
-      .then(data => {
-        res.writeHead(200, { "Content-Type": 'image/jpeg, image/png' });
-        res.write(data, 'binary');
-        res.end(null, 'binary');
-      });
-  } catch (e) {
-    next(e);
-  }
+  const { photo_key } = req.params;
+  getObject(process.env.S3_BUCKET, photo_key)
+    .then(data => {
+      res.writeHead(200, { "Content-Type": 'image/jpeg, image/png' });
+      res.write(data, 'binary');
+      res.end(null, 'binary');
+    })
+    .catch(e => {
+      res.json({success: false, message: "no image found"});
+    });
 }
 
 module.exports = {
