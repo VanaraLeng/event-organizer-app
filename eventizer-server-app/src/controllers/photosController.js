@@ -14,12 +14,9 @@ function getObject(Bucket, Key) {
     const getOjectCommand = new GetObjectCommand({ Bucket, Key });
     try {
       const res = await s3.send(getOjectCommand);
-      let resDataChunks = [];
-      res.Body.once('error', err => reject(err));
-      res.Body.on('data', chunk => resDataChunks.push(chunk));
-      res.Body.once('end', () => resolve(resDataChunks.join('')));
+      resolve(res.Body.transformToByteArray());
     } catch (e) {
-      return reject(e);
+      reject(e);
     }
   })
 }
@@ -27,7 +24,12 @@ function getObject(Bucket, Key) {
 async function getPhoto(req, res, next) {
   try {
     const { photo_key } = req.params;
-    getObject(process.env.S3_BUCKET, photo_key).then(data => res.send(data));
+    getObject(process.env.S3_BUCKET, photo_key)
+      .then(data => {
+        res.writeHead(200, { "Content-Type": 'image/jpeg, image/png' });
+        res.write(data, 'binary');
+        res.end(null, 'binary');
+      });
   } catch (e) {
     next(e);
   }

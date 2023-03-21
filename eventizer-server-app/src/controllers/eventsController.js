@@ -52,6 +52,7 @@ async function addNewEvent(req, res, next) {
     const timestamp = Date.now();
     const newEvent = new Events({
       ...req.body,
+      photo: { filename: req.body.photo },
       createdBy: req.user,
       createdAt: timestamp,
       updatedAt: timestamp
