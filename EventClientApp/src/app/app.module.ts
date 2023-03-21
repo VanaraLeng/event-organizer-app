@@ -40,7 +40,7 @@ function initializeAppFactory(userService: UserService): () => void {
       { path: 'auth', loadChildren: ()=> import('./auth/auth.module').then(module => module.AuthModule )},
       { path: 'event', loadChildren: ()=> import('./event/event.module').then(module => module.EventModule )},
       { path: 'user', loadChildren: () => import('./user/user.module').then(module => module.UserModule )},
-      { path: '**', redirectTo: '/auth/signup' }
+      { path: '**', redirectTo: '/event' }
     ]),
     BrowserAnimationsModule,
     LayoutModule,
