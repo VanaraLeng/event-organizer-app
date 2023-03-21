@@ -11,6 +11,6 @@ export default interface IEvent {
     createdAt: number,
     updatedAt: number,
     attendees: IUser[],
-    photos: { filename: string }[],
+    photo: { filename: string },
     registered: boolean
 }
