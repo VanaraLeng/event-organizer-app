@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { MatTableModule } from '@angular/material/table' 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,14 @@ import { ViewEventComponent } from './view-event/view-event.component';
 import { MyEventComponent } from './my-event/my-event.component';
 import { UserService } from '../user.service';
 import { AttendeesComponent } from './attendees/attendees.component';
+
+const guardNonLoggedInUser = () => { 
+  const canActivate = inject(UserService).isLoggedIn()
+  if (!canActivate) {
+    inject(Router).navigate(['','event']);
+  }
+  return inject(UserService).isLoggedIn() 
+}
 
 @NgModule({
   declarations: [
@@ -34,11 +42,11 @@ import { AttendeesComponent } from './attendees/attendees.component';
     FormsModule,
     RouterModule.forChild([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'me', component: MyEventComponent, canActivate: [() => { return inject(UserService).isLoggedIn() }] },
-      { path: 'create', component: CreateEventComponent },
-      { path: 'update', component: UpdateEventComponent },
-      { path: 'attendees', component: AttendeesComponent},
-      { path: '**', redirectTo: '' }
+      { path: 'me', component: MyEventComponent, canActivate: [ guardNonLoggedInUser ] },
+      { path: 'create', component: CreateEventComponent, canActivate: [ guardNonLoggedInUser ] },
+      { path: 'update', component: UpdateEventComponent, canActivate: [ guardNonLoggedInUser ] },
+      { path: 'attendees', component: AttendeesComponent, canActivate: [ guardNonLoggedInUser ]},
+      { path: '**', redirectTo: '/event' }
     ]),
   ]
 })
