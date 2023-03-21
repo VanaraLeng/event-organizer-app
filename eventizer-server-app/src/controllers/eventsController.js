@@ -4,7 +4,7 @@ const Events = require('../models/eventsModel');
 async function getAllEvents(req, res, next) {
   try {
     // construct query
-    const { registered, startBefore, popular, lat, long } = req.query;
+    const { registered, startBefore, startAfter, popular, lat, long } = req.query;
     const query = {};
     if (req.user) {
       if (req.user.location) query['location'] = { $near: req.user.location };
@@ -12,7 +12,8 @@ async function getAllEvents(req, res, next) {
       else if (registered === "false") query['createdBy._id'] = req.user._id;
     }
     if (startBefore) query['startAt'] = { $lte: startBefore }
-    if (popular) query['$expr'] = { $gt: [{ $size: "$attendees" }, {$multiply: ["$seatLimit", 0.5]} ] }
+    if (startAfter && startBefore) query['startAt'] = { $gte: startAfter, $lte: startBefore }
+    if (popular) query['$expr'] = { $gt: [{ $size: "$attendees" }, { $multiply: ["$seatLimit", 0.5] }] }
     if (lat && long) query['location'] = { $near: [+long, +lat] };
 
     // find events
