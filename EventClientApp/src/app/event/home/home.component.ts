@@ -106,6 +106,7 @@ export class HomeComponent {
       next: (res) => {
         if (res.success == true) {
           event.registered = true;
+          event.attendees.push()
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3000 })
         }
@@ -121,6 +122,7 @@ export class HomeComponent {
       next: (res) => {
         if (res.success == true) {
           event.registered = false;
+          event.attendees.push()
 
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3000 })
