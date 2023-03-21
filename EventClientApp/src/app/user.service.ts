@@ -44,14 +44,11 @@ export class UserService {
   }
 
   uploadPhoto(formData: any) {
-    // POST http://localhost:3000/api/photos
     return this.client.post<IResult<{ result: any }>>(environment.SERVER_BASE_URL + '/api/photos', formData);
   }
 
   getLocation(zipcode: string) {
-    // POST https://maps.googleapis.com/maps/api/geocode/json?key=YOUR_API_KEY&components=postal_code:97403
-    //AIzaSyCF2DzUKXShDYcD14kQO3GbsKF75rBZ0Jo
-    return this.client.get<any>('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCF2DzUKXShDYcD14kQO3GbsKF75rBZ0Jo&components=postal_code:' + zipcode);
+    return this.client.get<any>('https://maps.googleapis.com/maps/api/geocode/json?key=' + environment.GOOGLE_MAP_KEY + '&components=postal_code:' + zipcode);
   }
 
   // Helper methods
