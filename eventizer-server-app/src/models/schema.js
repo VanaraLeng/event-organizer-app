@@ -11,7 +11,9 @@ const usersSchema = mongoose.Schema({
   password: { type: String, required: true },
   bio: { type: String },
   location: [Number],
-  photo: photosSchema
+  photo: photosSchema,
+  createdAt: { type: Number, required: true },
+  updatedAt: { type: Number, required: true }
 });
 
 const userSchema = mongoose.Schema({
