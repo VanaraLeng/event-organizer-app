@@ -34,7 +34,7 @@ const eventsSchema = mongoose.Schema({
   location: { type: [Number], index: '2d' },
   seatLimit: { type: Number, required: true },
   attendees: [userSchema],
-  photos: photosSchema,
+  photo: photosSchema,
   createdAt: { type: Number, required: true },
   updatedAt: { type: Number, required: true }
 });
