@@ -3,7 +3,9 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
+import jwt_decode from 'jwt-decode';
 import { Observable } from 'rxjs';
+import IState from 'src/app/IState.interface';
 
 @Component({
   selector: 'app-signup',
@@ -61,6 +63,26 @@ export class SignupComponent {
             verticalPosition: 'top', duration: 3 * 1000
           })
           this.signup = false;
+
+          const { _id, firstName, lastName, email, location, bio, token } = jwt_decode(res.data.token) as IState;
+          // Store user state
+          const state = {
+            _id,
+            firstName,
+            lastName,
+            email,
+            location,
+            bio,
+            token: res.data.token
+          }
+
+          // update state$ value
+          this.userService.state$.next(state)
+
+          // Store in local storage 
+          localStorage.setItem('APPSTATE', JSON.stringify(state))
+          this.router.navigate([''])
+
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
         }

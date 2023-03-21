@@ -32,7 +32,7 @@ export class UserService {
   }
 
   signup(user: any) {
-    return this.client.post<IResult<Users>>(environment.SERVER_BASE_URL + '/api/users/signup', user);
+    return this.client.post<IResult<{ token: string }>>(environment.SERVER_BASE_URL + '/api/users/signup', user);
   }
 
   getUser(_id: string) {
