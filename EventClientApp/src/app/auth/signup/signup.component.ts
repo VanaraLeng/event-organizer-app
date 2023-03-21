@@ -29,6 +29,7 @@ export class SignupComponent {
   profile = ''
   address = ''
   columns: number = 2;
+  localUrl = []
 
   userService = inject(UserService);
   notification = inject(MatSnackBar);
@@ -90,33 +91,35 @@ export class SignupComponent {
     const file: File = event.target.files[0];
 
     if (file) {
-
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
       const formData = new FormData();
-      formData.append("photos", file);
+      formData.append("photo", file);
 
       this.userService.uploadPhoto(formData).subscribe({
         next: (res) => {
-          console.log("res ==>", res);
-
           if (res.success === true) {
-            this.profile = res.data.result[0];
+            this.profile = res.data.result;
           } else {
             this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+            this.localUrl = [];
           }
         },
         error: (e) => {
           this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+          this.localUrl = [];
         }
       })
+
     }
   }
 
   getGeoLocation() {
-    console.log('Getting address: ', this.form.value.address);
     this.userService.getLocation(this.form.value.address ? this.form.value.address : "52557").subscribe({
       next: (res) => {
-        console.log("res ==>", res);
-
         if (res.status == 'OK') {
           this.form.setValue({
             firstname: this.form.value.firstname ? this.form.value.firstname : '',
@@ -141,8 +144,6 @@ export class SignupComponent {
   }
 
   breakPoints() {
-    console.log("Break Points", window.innerWidth);
-
     switch (true) {
       case (window.innerWidth <= 480):
         this.columns = 1;
