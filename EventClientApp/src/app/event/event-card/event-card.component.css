@@ -24,3 +24,7 @@ button {
   padding: 0;
   margin-top: -3px;
 }
+
+.warning {
+  color: red;
+}

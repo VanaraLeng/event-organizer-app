@@ -19,6 +19,8 @@
 .photo {
   display: block;
   width: 120px;
+  height: 120px;
   margin: auto;
-  border-radius: 10px;
+  border: 0;
+  border-radius: 60px;
 }

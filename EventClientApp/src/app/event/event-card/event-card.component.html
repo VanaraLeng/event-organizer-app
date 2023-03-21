@@ -40,10 +40,9 @@
                     <span> {{ event.seatLimit }} </span>
                     <span *ngIf="event.seatLimit > 1"> people </span>
                     <span *ngIf="event.seatLimit < 2"> person </span>
+                    <span class="warning">({{ event.seatLimit - event.attendees.length}} left)</span>
                 </td>
             </tr>
-
-     
 
         </table>
         <div class="spacer"></div>

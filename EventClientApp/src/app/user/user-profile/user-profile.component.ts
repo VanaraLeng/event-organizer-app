@@ -18,17 +18,19 @@ export class UserProfileComponent {
   userService = inject(UserService);
 
   form = inject(FormBuilder).group({
-    firstname: [''],
-    lastname: [''],
+    firstname: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    bio: [''],
+    bio: '',
     address: [''],
-    latitude: [''],
-    longitude: [''],
+    latitude: ['', [Validators.required]],
+    longitude: ['', [Validators.required]],
+    photo: ''
   })
 
   user!: IUser;
   photoUrl!: string;
+  photoBaseUrl = environment.PHOTO_BASE_URL
   notification = inject(MatSnackBar);
 
   isMe = false;
@@ -43,8 +45,6 @@ export class UserProfileComponent {
       .subscribe({
         next: response => {
 
-          
-
           this.user = response.data.user as IUser;
           if (this.user.photo) this.photoUrl = environment.PHOTO_BASE_URL + this.user.photo.filename;
           else this.photoUrl = "";
@@ -58,12 +58,47 @@ export class UserProfileComponent {
             email: this.user.email,
             bio: this.user.bio,
             address: '',
-            latitude:  String(this.user.location[0]),
-            longitude: String(this.user.location[1])
+            latitude: String(this.user.location[0]),
+            longitude: String(this.user.location[1]),
+            photo: this.user.photo.filename
           })
         }
       });
   }
+
+  profile?: String
+
+  uploadPhoto(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      this.userService.uploadPhoto(formData).subscribe({
+        next: (res) => {
+          console.log("res ==>", res);
+
+          if (res.success === true) {
+            const filename = res.data.result
+            this.form.value.photo = filename;
+            this.user.photo.filename = filename;
+            console.log(filename);
+            // Mark form as dirty
+            this.form.get('photo')?.markAsDirty();
+
+          } else {
+            this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+          }
+        },
+        error: (e) => {
+          this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      })
+    }
+  }
+
 
   getGeoLocation() {
     console.log('Getting address: ', this.form.value.address);
@@ -80,6 +115,7 @@ export class UserProfileComponent {
             address: this.form.value.address ? this.form.value.address : '',
             latitude: res.results[0].geometry.location.lat,
             longitude: res.results[0].geometry.location.lng,
+            photo: this.form.value.photo ?? ''
           })
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
@@ -92,29 +128,33 @@ export class UserProfileComponent {
   }
 
   update() {
-    if (this.form.dirty) {
-      const formValue = this.form.value;
-      const updateUser = {
-        firstName: formValue.firstname as string,
-        lastName: formValue.lastname as string,
-        email: formValue.email as string,
-        bio: formValue.bio as string,
-        location: [ Number(formValue.latitude), Number(formValue.longitude)]
-      };
-      this.userService.updateUser(this.user._id, updateUser).subscribe({
-        next: (res) => {
-          console.log("res ==>", res);
-
-          if (res.success === true) {
-            this.notification.open("Successfully update profile!", "", { duration: 3 * 1000 })
-          } else {
-            this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
-          }
-        },
-        error: (e) => {
-          this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
-        }
-      })
+    if (!this.form.dirty || this.form.invalid) {
+      this.notification.open("Please enter correct information.", 'Dismiss', { duration: 3 * 1000 })
+      return
     }
+
+    const formValue = this.form.value;
+    const updateUser = {
+      firstName: formValue.firstname as string,
+      lastName: formValue.lastname as string,
+      email: formValue.email as string,
+      bio: formValue.bio as string,
+      location: [Number(formValue.latitude), Number(formValue.longitude)],
+      photo: formValue.photo
+    };
+    this.userService.updateUser(this.user._id, updateUser).subscribe({
+      next: (res) => {
+        console.log("res ==>", res);
+
+        if (res.success === true) {
+          this.notification.open("Successfully update profile!", "", { duration: 3 * 1000 })
+        } else {
+          this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
+        }
+      },
+      error: (e) => {
+        this.notification.open(e.message, 'Dismiss', { duration: 3 * 1000 })
+      }
+    })
   }
 }
