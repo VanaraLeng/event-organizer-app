@@ -52,7 +52,7 @@ async function addNewEvent(req, res, next) {
     const timestamp = Date.now();
     const newEvent = new Events({
       ...req.body,
-      photo: [{ filename: req.body.photo }],
+      photo: { filename: req.body.photo },
       createdBy: req.user,
       createdAt: timestamp,
       updatedAt: timestamp
@@ -69,7 +69,7 @@ async function updateEventById(req, res, next) {
     const { event_id } = req.params;
     const updatedEvent = {
       ...req.body,
-      photo: [{ filename: req.body.photo }],
+      photo: {filename: req.body.photo},
       updatedAt: Date.now()
     };
     if (req.body.photo == "") delete updatedEvent.photo;
