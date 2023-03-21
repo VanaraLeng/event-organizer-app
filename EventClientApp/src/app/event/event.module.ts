@@ -21,7 +21,7 @@ const guardNonLoggedInUser = () => {
   if (!canActivate) {
     inject(Router).navigate(['','event']);
   }
-  return inject(UserService).isLoggedIn() 
+  return canActivate;
 }
 
 @NgModule({
