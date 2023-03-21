@@ -33,4 +33,7 @@
   [registerable]="userService.isLoggedIn()"
   (action)="cardEventAction(item, $event)"
   />
-</div> 
+</div>
+
+<button mat-fab extended color="accent" class="fab" *ngIf="userService.isLoggedIn()" (click)="createEvent()">
+  <mat-icon>add</mat-icon> Create Event</button>

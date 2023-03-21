@@ -59,9 +59,11 @@ export class MyEventComponent {
         case 'upcoming':
         this.isEditable = false;
         this.isDeleteable = false;
+        const now = Date.now()
         this.getAllEvents({
           registered: true,
-          startBefore: Date.now() + 3 * 24 * 60 * 60 * 1000 // 3 days
+          startAfter: now,
+          startBefore: now + 3 * 24 * 60 * 60 * 1000 // 3 days
         });
     }
   }
@@ -192,4 +194,7 @@ export class MyEventComponent {
     })
   }
 
+  createEvent() {
+    this.router.navigate(['', 'event', 'create']);
+  }
 }
