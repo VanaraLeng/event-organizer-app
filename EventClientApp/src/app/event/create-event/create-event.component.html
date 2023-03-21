@@ -102,14 +102,14 @@
     <mat-step [stepControl]="thirdFormGroup" label="Photos">
         <form [formGroup]="thirdFormGroup">
             <mat-grid-list [cols]="columns" rowHeight="85px" [gutterSize]="'10px'" (window:resize)="onResize($event)">
-                <mat-grid-tile class="profile">
+                <mat-grid-tile class="profile" rowspan="2">
                     <input #fileInput hidden="true" type="file" (change)="uploadPhoto($event)"
                         formControlName="photo" />
                     <button mat-flat-button fxLayout="row" fxLayoutAlign="start" color="primary"
                         (click)="fileInput.click()">Upload
                         Photo</button>
                     <div class="margin-top-custom">
-                        &nbsp;<img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 25%">
+                        &nbsp;<img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder" style="width: 250px">
                     </div>
                 </mat-grid-tile>
             </mat-grid-list>

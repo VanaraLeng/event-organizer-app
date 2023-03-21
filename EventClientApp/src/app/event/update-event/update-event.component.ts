@@ -69,7 +69,7 @@ export class UpdateEventComponent {
             address: ""
           })
           this.thirdFormGroup.value.photo = event.photo;
-          this.localUrl = event.photo
+          this.localUrl = event.photo?.filename
         } else {
           this.notification.open(res.message, 'Dismiss', { duration: 3 * 1000 })
           this.router.navigate(['', 'event', 'me']);
