@@ -64,13 +64,14 @@ async function updateUserById(req, res, next) {
     };
     if (req.body.photo == "") delete userToBeUpdate.photo;
     const result = await Users.updateOne(
-      { _id: user_id, $expr: { $gt: [{ $subtract: [timestamp, "$updatedAt"] }, oneDay] } },
+      // { _id: user_id, $expr: { $gt: [{ $subtract: [timestamp, "$updatedAt"] }, oneDay] } },
+      { _id: user_id },
       { $set: userToBeUpdate }
     );
-    if (result.modifiedCount == 0) {
-      res.json({ success: false, message: "re-update profile within 24 hour is not allowed" });
-      return;
-    }
+    // if (result.modifiedCount == 0) {
+    //   res.json({ success: false, message: "re-update profile within 24 hour is not allowed" });
+    //   return;
+    // }
     res.json({ success: true, data: { result: result } });
   } catch (e) {
     next(e);
