@@ -9,11 +9,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 
 const guardLoggedInUser = () => { 
-  const canActivate = inject(UserService).isLoggedIn()
-  if (canActivate) {
+  const canActivate = !inject(UserService).isLoggedIn()
+  if (!canActivate) {
     inject(Router).navigate(['','event']);
   }
-  return inject(UserService).isLoggedIn() 
+  return canActivate
 }
 
 @NgModule({
