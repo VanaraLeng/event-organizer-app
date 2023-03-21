@@ -5,6 +5,15 @@
 }
 
 table {
-  margin: 3% 5%;
   min-width: -webkit-fill-available;
+}
+
+.photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+}
+
+.content {
+  margin: 3% 5%;
 }
