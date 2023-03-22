@@ -4,8 +4,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
 import jwt_decode from 'jwt-decode';
-import { Observable } from 'rxjs';
-import IState from 'src/app/IState.interface';
+import IState from 'src/app/models/IState.interface';
 
 @Component({
   selector: 'app-signup',

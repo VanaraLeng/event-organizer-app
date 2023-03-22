@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { IUser } from 'src/app/IUser.interface';
+import { IUser } from 'src/app/models/IUser.interface';
 import { environment } from 'src/environments/environment';
 import { EventService } from '../event.service';
 

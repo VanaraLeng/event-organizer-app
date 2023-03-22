@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router, UrlSerializer } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import IEvent from '../IEvent.interface';
-import IResult from '../IResult.interface';
-import { IUser } from '../IUser.interface';
+import IEvent from '../models/IEvent.interface';
+import IResult from '../models/IResult.interface';
+import { IUser } from '../models/IUser.interface';
 
 @Injectable({
   providedIn: 'root'

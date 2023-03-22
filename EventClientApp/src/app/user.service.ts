@@ -1,11 +1,10 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import IResult from './IResult.interface';
-import IState from './IState.interface';
+import IResult from './models/IResult.interface';
+import IState from './models/IState.interface';
 import { environment } from '../environments/environment'
-import { Users } from "./models/User";
-import { IUser } from './IUser.interface';
+import { IUser } from './models/IUser.interface';
 
 @Injectable({
   providedIn: 'root'
