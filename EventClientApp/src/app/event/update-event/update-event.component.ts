@@ -38,7 +38,7 @@ export class UpdateEventComponent {
 
   id = this.eventService.editEvent?._id ? this.eventService.editEvent?._id : ''
   columns = 2;
-  profile = []
+  profile = ''
   localUrl = ''
   photoBaseUrl = environment.PHOTO_BASE_URL
 

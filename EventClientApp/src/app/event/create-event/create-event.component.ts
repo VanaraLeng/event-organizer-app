@@ -36,8 +36,8 @@ export class CreateEventComponent {
 
   columns: number = 2;
   linear = true;
-  profile = []
-  localUrl = []
+  profile = '';
+  localUrl = [];
 
   constructor(private router: Router, private _location: Location) { }
 
