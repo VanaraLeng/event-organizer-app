@@ -56,7 +56,7 @@ async function updateUserById(req, res, next) {
     const { user_id } = req.params;
     if (req.user._id != user_id) throw new UnauthorizedError('not authorized to update user details');
     const timestamp = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
+    // const oneDay = 24 * 60 * 60 * 1000;
     const userToBeUpdate = {
       ...req.body,
       photo: { filename: req.body.photo },
