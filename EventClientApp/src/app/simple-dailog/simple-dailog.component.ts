@@ -1,6 +1,6 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import ISimpleDialog from '../ISimpleDialog.interface';
+import ISimpleDialog from '../models/ISimpleDialog.interface';
 
 @Component({
   selector: 'app-simple-dailog',

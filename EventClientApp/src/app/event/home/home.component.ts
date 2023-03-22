@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import IEvent from 'src/app/IEvent.interface';
+import IEvent from 'src/app/models/IEvent.interface';
 import { UserService } from 'src/app/user.service';
 import { EventService } from '../event.service';
 

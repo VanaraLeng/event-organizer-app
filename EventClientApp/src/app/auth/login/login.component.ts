@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/user.service';
 import jwt_decode from 'jwt-decode';
-import IState from 'src/app/IState.interface';
+import IState from 'src/app/models/IState.interface';
 import { Router } from '@angular/router';
 
 

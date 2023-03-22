@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SimpleDailogComponent } from './simple-dailog/simple-dailog.component';
-import ISimpleDialog from './ISimpleDialog.interface';
+import ISimpleDialog from './models/ISimpleDialog.interface';
 
 @Component({
   selector: 'app-root',

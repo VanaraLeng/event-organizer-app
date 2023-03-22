@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUser } from 'src/app/IUser.interface';
+import { IUser } from 'src/app/models/IUser.interface';
 import { UserService } from 'src/app/user.service';
 import { environment } from '../../../environments/environment';
 import { map, mergeMap } from 'rxjs/operators';
